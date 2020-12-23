@@ -6,16 +6,17 @@
 
 ## Table of Contents
 
-| No. | Questions                                                                                          |
-| --- | -------------------------------------------------------------------------------------------------- |
-|     | **Spring Core**                                                                                    |
-| 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                             |
-| 2   | [What is open source?](#What-is-open-source)                                                       |
-| 3   | [What is an application framework?](#What-is-an-application-framework)                             |
-| 4   | [How is Spring lightweight?](#How-is-Spring-lightweight)                                           |
-| 5   | [What is Inversion of Control (IoC)?](#What-is-Inversion-of-Control-IoC)                           |
-| 6   | [What is an aspect-oriented container framework?](#What-is-an-aspect-oriented-container-framework) |
-| 7   | [What are the features of Spring Framework?](#What-are-the-features-of-Spring-Framework)           |
+| No. | Questions                                                                                             |
+| --- | ----------------------------------------------------------------------------------------------------- |
+|     | **Spring Core**                                                                                       |
+| 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                                |
+| 2   | [What is open source?](#What-is-open-source)                                                          |
+| 3   | [What is an application framework?](#What-is-an-application-framework)                                |
+| 4   | [How is Spring lightweight?](#How-is-Spring-lightweight)                                              |
+| 5   | [What is Inversion of Control (IoC)?](#What-is-Inversion-of-Control-IoC)                              |
+| 6   | [What is an aspect-oriented container framework?](#What-is-an-aspect-oriented-container-framework)    |
+| 7   | [What are the features of Spring Framework?](#What-are-the-features-of-Spring-Framework)              |
+| 8   | [What are the differences between Spring & Struts?](#What-are-the-differences-between-Spring--Struts) |
 
 ## Spring Core
 
@@ -196,6 +197,25 @@
    - **Easy Integration:** Spring is designed to be used with other frameworks as well. We can use ORM, Struts, Hibernate and other frameworks together with Spring. Spring framework does not impose any restriction on the frameworks to be used together.
 
    - **End to end development:** Spring can be used for development of different kinds of applications like standalone applications, Web applications and applets as well.
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+8. ### What are the differences between Spring & Struts?
+
+   Struts framework supports only developing web applications but spring framework supports various types of application development. In a web application not only have web related aspects, but can have various other things like managing business logic, persisting data, transaction management, messaging, calling external web-services etc. In this case Struts not able to serve these aspects but using Spring we can develop JSE, JEE, Remote(RMI), Persistency, Distributed applications etc.
+
+   Technical Differences between Spring & Struts:
+   | Spring | Struts |
+   | --------------------------- | ---------------------------- |
+   | Spring is an application framework which implements both MVC & IOC design pattern.| Struts is a web framework which implements only MVC design pattern. |
+   | Spring is a layered architecture. | Struts is a not a layered architecture. |
+   | Spring provides abstraction layer on multiple Java technologies including Servlet, JSPs as well as on other framework software like Hibernate, Tapestry, EJB, JSF etc. | Struts provides abstraction layer only on Servlet, JSP technology. |
+   | Spring is a lightweight framework which is loosely coupled. | Struts is a heavyweight framework which is tightly coupled. |
+   | Spring provides easy integration with ORM, JDBC technologies. | Struts does not provide support for integrating with ORM, JDBC technology. Manually we need to write code. |
+   | Spring is non-invasive which means it doesn’t force a programmer to extend/implement their class from any predefined class or interface given by Spring API. | Struts is invasive. Means it forces the programmer to extend the base class provided by Struts API. |
+   |Spring allows JSP, Velocity, Free maker, Excel and PDF for view components. |Struts allows only JSP as view components.|
 
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
