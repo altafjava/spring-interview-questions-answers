@@ -1,4 +1,4 @@
-# Spring Interview Questions & Answers
+### Spring Interview Questions & Answers
 
 > Click :star: if you like the project. Pull Request is highly appreciated. Follow me [@AltafJava](https://twitter.com/altafjava) for technical updates.
 
@@ -6,17 +6,21 @@
 
 ## Table of Contents
 
-| No. | Questions                                                                                             |
-| --- | ----------------------------------------------------------------------------------------------------- |
-|     | **Spring Core**                                                                                       |
-| 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                                |
-| 2   | [What is open source?](#What-is-open-source)                                                          |
-| 3   | [What is an application framework?](#What-is-an-application-framework)                                |
-| 4   | [How is Spring lightweight?](#How-is-Spring-lightweight)                                              |
-| 5   | [What is Inversion of Control (IoC)?](#What-is-Inversion-of-Control-IoC)                              |
-| 6   | [What is an aspect-oriented container framework?](#What-is-an-aspect-oriented-container-framework)    |
-| 7   | [What are the features of Spring Framework?](#What-are-the-features-of-Spring-Framework)              |
-| 8   | [What are the differences between Spring & Struts?](#What-are-the-differences-between-Spring--Struts) |
+| No. | Questions                                                                                                                                                             |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     | **Spring Core**                                                                                                                                                       |
+| 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                                                                                                |
+| 2   | [What is open source?](#What-is-open-source)                                                                                                                          |
+| 3   | [What is an application framework?](#What-is-an-application-framework)                                                                                                |
+| 4   | [How is Spring lightweight?](#How-is-Spring-lightweight)                                                                                                              |
+| 5   | [What is Inversion of Control (IoC)?](#What-is-Inversion-of-Control-IoC)                                                                                              |
+| 6   | [What is an aspect-oriented container framework?](#What-is-an-aspect-oriented-container-framework)                                                                    |
+| 7   | [What are the features of Spring Framework?](#What-are-the-features-of-Spring-Framework)                                                                              |
+| 8   | [What are the differences between Spring & Struts?](#What-are-the-differences-between-Spring--Struts)                                                                 |
+| 9   | [What is Java EE?](#What-is-Java-EE)                                                                                                                                  |
+| 10  | [What are the limitations of Java EE (API)?](#What-are-the-limitations-of-Java-EE-API)                                                                                |
+| 11  | [What is Boilerplate code? What are the problems if we write the boilerplate code?](#What-is-Boilerplate-code-What-are-the-problems-if-we-write-the-boilerplate-code) |
+| 12  | [Can we say Spring is the replacement of Java EE?](#Can-we-say-Spring-is-the-replacement-of-Java-EE)                                                                  |
 
 ## Spring Core
 
@@ -88,19 +92,19 @@
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
- 
+
 6. ### What is an aspect-oriented container framework?
- 
+
    In computing, aspect-oriented programming (AOP) is a programming paradigm that aims to increase modularity by allowing the separation of cross-cutting concerns. In simple words we can say that it is a methodology which will separate cross-cutting concerns from core concerns. For example, if writing an application for handling medical records, the indexing of such records is a core concern, while logging a history of changes to the record database or user database, or an authentication system, would be cross-cutting concerns.
- 
+
    **Core concern:** The logic that seems to be mandatory and without having that logic the existence of our application will not be there, such kind of logic is considered as core concern. Ex: writing business logic, fetching data from database/external API etc.
- 
+
    **Cross-Cutting concern:** The program logic which is common across the application and the presence/absence of that logic does not impact core business functionality but if we apply the cross-cutting logic then it affects multiple points of an application is nothing but cross-cutting logic. Ex: Logging, Caching, Transaction processing, Security etc.
-   
+
    ![cross-cutting-concerns](images/core/cross-cutting-concerns.png)
-   
+
    The above figure represents a typical application that’s broken down into modules. Each module’s main concern is to provide services for its particular domain. But each module also requires similar ancillary functionalities, such as security, logging & transaction management.
-   
+
    Spring has provided rich support for aspect-oriented programming in its AOP module. Hence we can say that Spring is an aspect-oriented container framework.
 
   <div align="right">
@@ -220,3 +224,81 @@
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
+
+9. ### What is Java EE?
+
+   Java EE is an api/specification. Anyone is open to develop and provide a working implementation of the specification. The concrete implementations are the so-called application servers like WildFly, TomEE, GlassFish, Liberty, WebLogic, etc. There are also Servlet containers which implement only the JSP/Servlet part of the huge Java EE API such as Tomcat, Jetty, etc.
+
+   We can develop Web and Enterprise applications using Java EE. Java EE platforms provide an API and runtime environment for developing applications.
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+10. ### What are the limitations of Java EE (API)?
+ 
+    - Since Java EE is an API and API is partial. Means it mostly contains interfaces & abstract classes. There may be some concrete classes, enums as well but still we need implementation to develop applications.
+    - API does not provide boilerplate code.
+    - API does not promote rapid application development.
+    - API is huge in nature and the classes are interdependent with each other. For example: Consider the following code which will fetch the data from `mysql` database using JDBC API.
+ 
+      ```java
+      Connection con=DriverManager.getConnection("url","username","password");
+      Statement st=con.createStatement();
+      ResultSet rs=st.executeQuery("select * from emp");
+      while(rs.next()) {
+        System.out.println(rs.getString(1);
+      }
+      ```
+ 
+      Here ResultSet is dependent on Statement. Without having a `Statement` object we cannot create a `ResultSet` object. Again Statement is dependent on Connection. Without having a `Connection` object we cannot create a `Statement` object. Considering these facts it will take a lot of time to learn.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+11. ### What is Boilerplate code? What are the problems if we write the boilerplate code?
+ 
+    The repetitive code that every developer needs to write at many places with little or no modification to achieve some task is called the boilerplate code.
+ 
+    How do we get the connection while executing the JDBC code?
+ 
+    ```java
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection con=DriverManager.getConnection("url","username","password");
+    Statement st=con.createStatement();
+    ResultSet rs=st.executeQuery("select * from emp");
+    while(rs.next()) {
+      System.out.println(rs.getString(1);
+    }
+    ```
+ 
+    - Load & register the `Driver` class.
+    - Invoke the `getConnection()` method on DriverManager to obtain the `Connection` object.
+    - Create the `Statement` object by invoking `createStatement()` method.
+    - Get the `ResultSet` object by invoking `executeQuery("query")`.
+ 
+    Is there any alternative to these steps? Actually, no! Whenever, wherever we have to perform JDBC operations, these same steps have to be repeated every time by everyone. This kind of repetitive code is nothing but boilerplate code. The boiler plate code makes the development unnecessarily lengthier and complex.
+ 
+    If API does not provide boilerplate code then we need to write the huge amount of code. If we write huge amount of code then
+ 
+    - It will take a huge amount of time.
+    - It will take a huge effort.
+    - We need more resources(people) and the cost of the development will become high.
+    - Many chances to increase the bug.
+    - It will take more time for testing and the cost of the testing will become high.
+    - Maintenance of the project and making changes in the code will be difficult.
+ 
+    Considering the above points API does not promote rapid application development. Hence instead of using Java EE we can use Spring framework as it provides the boilerplate code. Hence we can develop the same applications whatever we can build using Java EE in less time & with less amount of code.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+12. ### Can we say Spring is the replacement of Java EE?
+ 
+    No, Spring is not the replacement of Java EE. Spring is built on the top of Java EE. Spring internally uses Java EE. Our application will talk to the Spring provided classes and Spring provided classes talk to Java EE internally. Without Java EE, the existence of the Spring will not be there. Just like Hibernate is nothing without JDBC or **Omelette (Spring) is not possible without Egg (Java EE)**. Rather we can say Spring is the complement to Java EE.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div
