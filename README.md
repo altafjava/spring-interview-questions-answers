@@ -22,6 +22,15 @@
 | 11  | [What is Boilerplate code? What are the problems if we write the boilerplate code?](#What-is-Boilerplate-code-What-are-the-problems-if-we-write-the-boilerplate-code) |
 | 12  | [Can we say Spring is the replacement of Java EE?](#Can-we-say-Spring-is-the-replacement-of-Java-EE)                                                                  |
 | 13  | [What are the different modules available in Spring?](#What-are-the-different-modules-available-in-Spring)                                                            |
+| 14  | [What is POJO?](#What-is-POJO)                                                                                                                                        |
+| 15  | [What is a Java Bean?](#What-is-a-Java-Bean)                                                                                                                          |
+| 16  | [Similarities and Differences between POJO & Java Bean?](#Similarities-and-Differences-between-POJO--Java-Bean)                                                       |
+| 17  | [What is a Spring Bean?](#What-is-a-Spring-Bean)                                                                                                                      |
+| 18  | [Java Bean vs Spring Bean?](#Java-Bean-vs-Spring-Bean)                                                                                                                |
+| 19  | [What are the ways of collaborating objects?](#What-are-the-ways-of-collaborating-objects)                                                                            |
+| 20  | [Differences Between Inheritance Vs Composition?](#Differences-Between-Inheritance-Vs-Composition)                                                                    |
+| 21  | [When to use Inheritance?](#When-to-use-Inheritance)                                                                                                                  |
+| 22  | [When to use Composition?](#When-to-use-Composition)                                                                                                                  |
 
 ## Spring Core
 
@@ -351,6 +360,458 @@
 
     `spring-webmvc-portlet` is a framework released by Spring community for easier development of Java Portlets. Portlets are web components similar to Servlets managed by Portlet Container (similar to Web Container which manages Servlets). Portlets are components used in the UI layer for displaying the content fetched from different data sources to the end user.
 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+14. ### What is POJO?
+
+    **POJO:** POJO stands for `Plain Old Java Object`. If a public class does not implement/extend an prespecified interface/class and does not have any prespecified annotation and can be directly compiled & executable under the JDK without having any classpath reference to a library & framework is called a POJO class. Below `EmployeePojo.java` & `MyThread.java` are POJO classes.
+
+    ```java
+      public class EmployeePojo {
+
+        private String name;
+        private int age;
+        private double salary;
+
+        public EmployeePojo() {
+        }
+
+        public EmployeePojo(String name, int age, double salary) {
+            this.name = name;
+            this.age = age;
+            this.salary = salary;
+        }
+
+        public String empInfo() {
+           return name + " " + age + " " + salary;
+        }
+    }
+    ```
+
+    ```java
+    class MyThread extends Thread {
+
+        public void run() {
+          // ...
+        }
+    }
+    ```
+
+    Followings are not POJO classes:
+
+    ```java
+    public class MyServlet extends javax.servlet.http.HttpServlet {
+        /* MyServlet is not a POJO class because it extends the HttpServlet class which is not a part of Java SE API. HttpServlet is part of the Servlet API.*/
+    }
+    ```
+
+    ```java
+    public class Bar implements javax.ejb.EntityBean {
+        /* Bar is not a POJO class because it implements the EntityBean interface which is not a part of Java SE API. EntityBean is part of the EJB API.*/
+    }
+    ```
+
+    ```java
+    @javax.persistence.Entity
+    public class Foo {
+        /*Foo is not a POJO class because it uses the @Entity annotation which is not a part of Java SE API. @Entity is a part of JPA.*/
+    }
+    ```
+
+    _Note: Prespecified interface/class/annotation means except the JAVA SE API(third party interface/class/annotation). We can even implement `Serializable` interface & follow setter/getter pattern for methods in POJO but it is our own wish._
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+15. ### What is a Java Bean?
+ 
+    **Java Bean:** A JavaBean is nothing but a POJO class but have a strict set of rules:
+ 
+    - _Access levels:_ Properties should be private and expose getters and setters.
+    - _Method names:_ Getters & Setters follow the `getX()` & `setX()` convention (in the case of a boolean, `isX()` can be used for a getter).
+    - _Default Constructor:_ A no-argument constructor must be present so that an instance can be created without providing arguments for example during deserialization.
+    - _Serializable:_ Implementing the Serializable interface allows us to store the state.
+ 
+    Example:- `EmployeeBean.java`
+ 
+    ```java
+    public class EmployeeBean implements java.io.Serializable {
+ 
+        private static final long serialVersionUID = 1L;
+ 
+        private String name;
+        private int age;
+        private double salary;
+ 
+        public EmployeeBean() {
+        }
+ 
+        public EmployeeBean(String name, int age, double salary) {
+            this.name = name;
+            this.age = age;
+            this.salary = salary;
+        }
+ 
+        public String getName() {
+            return name;
+        }
+ 
+        public void setName(String name) {
+            this.name = name;
+        }
+ 
+        // additional getters/setters
+    }
+ 
+    ```
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+16. ### Similarities and Differences between POJO & Java Bean?
+ 
+    **Similarities:**
+ 
+    - Both classes must be public i.e accessible to all.
+    - Properties or variables defined in both classes must be private i.e. can't be accessed directly.
+    - Both classes must have a default constructor i.e no argument constructor.
+ 
+    **Differences:**
+ 
+    - Java Bean must implement `java.io.Serializable` but it is not mandatory in case of POJO.
+    - There must be getters & setters in Java Bean but it is optional in case of POJO.
+ 
+    _Note: Due to this we can say, All Java Beans are POJOs but not all POJOs are Java Beans._
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+17. ### What is a Spring Bean?
+ 
+    A class which contains attributes and methods with business logic to perform some processing and its object is instantiated, assembled and otherwise managed by a Spring IoC container is called a Spring Bean. There is no restriction for creating spring beans. It can refer to any third party interface/class/annotation.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+18. ### Java Bean vs Spring Bean?
+ 
+    - Java Bean is always serializable, Spring Bean doesn’t need to.
+    - Java Bean must have a default no-arg constructor, Spring Bean doesn’t need to.
+    - Spring bean is managed by Spring IoC Container, Java Bean is not.
+ 
+    _Note: Every java bean can be a spring bean but every spring bean cannot be a java bean._
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+19. ### What are the ways of collaborating objects?
+ 
+    In a project, we don't have only one class to fulfil the business requirements. We can have a lot of classes and obviously these classes can't be isolated. Means one class needs another class to complete its functionality. Hence one class will talk to another class. Means one class will reuse its functionality by calling its method. This is nothing but collaborating objects. There are 2 ways of collaborating objects.
+ 
+    **Inheritance:** The process of acquiring attributes & methods from one class to another class is called Inheritance. The class being inherited is called Super Class(Parent) and the class that inherits from another class is called Sub Class(Child). The aim of inheritance is to provide the reusability of code so that a class has to write only the unique features and rest of the common properties and functionalities. The biggest advantage of Inheritance is that the code that is already present in super class need not be rewritten in the sub class. Inheritance represents an `IS-A` relationship. Means _PhysicsTeacher is a Teacher_. Example: `PhysicsTeacher.java`
+ 
+    ```java
+    class Teacher {
+        String designation = "Teacher";
+        String collegeName = "IIT Madras";
+ 
+        void does() {
+           System.out.println("Does(): Teaching");
+        }
+      }
+ 
+    public class PhysicsTeacher extends Teacher {
+        String mainSubject = "Physics";
+ 
+        public static void main(String[] args) {
+            PhysicsTeacher pt = new PhysicsTeacher();
+            System.out.println("College Name: "+pt.collegeName);
+            System.out.println("Designation: "+pt.designation);
+            System.out.println("Main Subject: "+pt.mainSubject);
+            pt.does();
+        }
+    }
+    ```
+ 
+    ```
+    Output:
+      College Name: IIT Madras
+      Designation: Teacher
+      Main Subject: Physics
+      Does(): Teaching
+    ```
+ 
+    **Association:** Association is the relation between two separate classes which establishes through their Objects. Association relationship indicates how objects know each other and how they are using each other’s functionality. It represents the `HAS-A` relationship. Association in Java can have the following relationships.
+ 
+    - `one-to-one:` A person can have only one passport.
+    - `one-to-many:` A bank can have many employees.
+    - `many-to-one:` Many students work on the same project.
+    - `many-to-many:` A user can belong to multiple communities, and a community can have multiple users.
+ 
+    Example: The below program demonstrates an association in Java.
+ 
+    ```java
+    class Account {
+        private String bankName;
+        private long accountNo;
+ 
+        Account(String bankName, long accountNo) {
+            this.bankName = bankName;
+            this.accountNo = accountNo;
+        }
+ 
+        public String getBankName() {
+            return this.bankName;
+        }
+ 
+        public long getAccountNumber() {
+            return this.accountNo;
+        }
+    }
+ 
+    class Employee {
+        private String empName;
+ 
+        Employee(String empName) {
+            this.empName = empName;
+        }
+ 
+        public String getEmpName() {
+           return empName;
+        }
+    }
+ 
+    public class Association {
+ 
+      public static void main(String[] args) {
+          Employee emp = new Employee("Andrew");
+          Account acc = new Account("Citi Bank", 12345);
+          System.out.println(emp.getEmpName() + " has an account with " + acc.getBankName() + " with Account Number:" + acc.getAccountNumber());
+      }
+    }
+    ```
+ 
+    ```
+    Output: Andrew has an account with Citi Bank with Account Number:12345
+    ```
+ 
+    Here, we have a class `Account` that has a bankName and accountNo. Next, we have an `Employee` class. We know that every employee will have an account number for depositing salary etc. So what we do is, instead of writing another class or method to read the Employee’s bank account details, we directly reuse the existing Account class. In other words, we associate an `Account` object with the `Employee` so that we get the Employee’s bank account details.
+ 
+    There are 2 forms of Association.
+ 
+    **1. Aggregation:** It is a unidirectional association i.e. a one way relationship. For example, a department can have students but vice versa is not possible. In Aggregation, both the entities(objects) can survive individually which means ending one entity will not affect the other entity(object). Therefore, it is often referred to as weak association. Let’s take the example of a player and a team.
+ 
+    ```java
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.stream.Collectors;
+ 
+    class Team {
+      private String teamName;
+      private List<Player> players;
+ 
+      public Team(String teamName, List<Player> players) {
+        this.teamName = teamName;
+        this.players = players;
+      }
+ 
+      private List<String> getPlayerInfo() {
+        return players.stream().map(player -> player.getPlayerName() + "(" + player.getPlayerAge() + ")").collect(Collectors.toList());
+      }
+ 
+      public String getTeamInfo() {
+        return teamName + ": " + getPlayerInfo();
+      }
+    }
+ 
+    class Player {
+      private String playerName;
+      private int playerAge;
+ 
+      public Player(String playerName, int playerAge) {
+        this.playerName = playerName;
+        this.playerAge = playerAge;
+      }
+ 
+      public String getPlayerName() {
+        return playerName;
+      }
+ 
+      public int getPlayerAge() {
+        return playerAge;
+      }
+    }
+ 
+    public class Aggregation {
+ 
+      public static void main(String[] args) {
+        Player player1 = new Player("David Warner", 34);
+        Player player2 = new Player("Rashid Khan", 22);
+ 
+        List<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+ 
+        Team team = new Team("Sunrisers Hyderabad", players);
+        System.out.println(team.getTeamInfo());
+      }
+    }
+ 
+    ```
+ 
+    ```
+    Output: Sunrisers Hyderabad: [David Warner(34), Rashid Khan(22)]
+ 
+    ```
+ 
+    Here if we destroy the team object, but still player1 & player2 objects will be alive.
+ 
+    **2. Composition:** It is a restricted form of Aggregation in which two entities (or we can say classes) are highly dependent on each other. For e.g. Human and Heart. A human needs a heart to live and a heart cannot survive without a human body.
+ 
+    ```java
+    class Human {
+        private String name;
+        private Heart heart;
+ 
+        public Human(String name) {
+            this.name = name;
+            heart = new Heart(290, 72);
+        }
+ 
+        public String getHumanInfo() {
+            return name + ": " + heart.toString();
+        }
+    }
+ 
+    class Heart {
+        private int weight;
+        private int heartBeat;
+ 
+        public Heart(int weight, int heartBeat) {
+          this.weight = weight;
+          this.heartBeat = heartBeat;
+        }
+ 
+        @Override
+        public String toString() {
+          return "Heart [weight=" + weight + "grams, heartBeat=" + heartBeat + "times/min]";
+        }
+    }
+ 
+    public class Composition {
+        public static void main(String[] args) {
+            Human human = new Human("David");
+            System.out.println(human.getHumanInfo());
+        }
+    }
+ 
+    ```
+ 
+    ```
+    Output: David: Heart [weight=290grams, heartBeat=72times/min]
+ 
+    ```
+ 
+    Here, if we destroy the human object, the heart object will also be destroyed.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+20. ### Differences Between Inheritance Vs Composition?
+
+    | Inheritance                                                                          | Composition                                            |
+    | ------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+    | Inheritance represents an 'Is-A' relationship.                                       | Composition depicts the 'Has-A' relationship.          |
+    | A class can extend only one class. Therefore, we can reuse code from only one class. | In composition, we can reuse code of multiple classes. |
+    | Inheritance is a static or compile time binding.                                     | Composition is a dynamic or run time-binding.          |
+    | We cannot reuse code from the final class.                                           | It allows code reusability even from final classes.    |
+    | It exposes both public and protected methods.                                        | It allows to invoke only public methods.               |
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+21. ### When to use Inheritance?
+
+    1. We can use inheritance when we know there is an `"IS-A"` relationship between a child and its parent class. Some examples would be:
+
+       - A person is a human.
+       - A cat is an animal.
+       - A car is a vehicle.
+
+    2. If the properties & behaviours of super class is common to subclass(sub class can have its own properties & behaviours) then we should use inheritance.
+    3. If we are not satisfied with the functionality of a class or if we want to change the functionality of a class without having source code then we can go for inheritance so that we can override the methods and provide a new implementation.
+    4. If we need to use almost all the methods of the superclass the we can go for inheritance.
+
+    > Bad example of Inheritance:
+
+    ```java
+    import java.util.ArrayList;
+    public class BadExampleInheritance extends ArrayList<Object> {
+
+        public static void main(String[] args) {
+            BadExampleInheritance list = new BadExampleInheritance();
+            list.add("Mobile");
+            list.add("Laptop");
+            list.add("Television");
+            list.forEach(System.out::println);
+        }
+    }
+    ```
+
+    Since, ArrayList has a lot of methods and we are inheriting all the methods but using only two methods i.e. `add()` & `forEach()`. Except these, no other methods are being used which is resulting in tightly coupled code that is both confusing and difficult to maintain. If we look closely, it is also clear that this code does not pass the `"IS-A"` test.
+
+    > Some predefined good examples of inheritance:
+
+    ```java
+      class IndexOutOfBoundsException extends RuntimeException {...}
+
+      class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {...}
+
+      class FileWriter extends OutputStreamWriter {...}
+
+      class OutputStreamWriter extends Writer {...}
+
+      interface Stream<T> extends BaseStream<T, Stream<T>> {...}
+    ```
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+22. ### When to use Composition?
+ 
+    1. If an object has(or is part of) another object, we can go for composition. Some examples would be:
+       - A car has a battery (a battery is part of a car).
+       - A person has a heart (a heart is part of a person).
+       - A house has a living room (a living room is part of a house).
+    2. If we don't need all the behaviours(methods) of a class. Means we need only a few functionalities of a class then we should go for composition. We can see in the below example, we are using only 2 methods of ArrayList class without inheriting all of them.
+ 
+       ```java
+       import java.util.ArrayList;
+       import java.util.List;
+       public class GoodExampleComposition {
+ 
+         public static void main(String[] args) {
+             List<String> list = new ArrayList<>();
+             list.add("Mobile");
+             list.add("Laptop");
+             list.add("Television");
+             list.forEach(System.out::println);
+         }
+       }
+       ```
+ 
+       This results in simpler, less coupled code that will be easier to understand and maintain.
+ 
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
