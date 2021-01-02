@@ -200,7 +200,7 @@
 
    - **Easy Integration:** Spring is designed to be used with other frameworks as well. We can use ORM, Struts, Hibernate and other frameworks together with Spring. Spring framework does not impose any restriction on the frameworks to be used together.
 
-   - **End to end development:** Spring can be used for development of different kinds of applications like standalone applications, Web applications and applets as well.
+   - **End to end development:** Spring can be used for development of different kinds of applications like standalone, Web, Enterprise, Distributed applications and applets as well.
 
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
@@ -301,4 +301,436 @@
  
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
-  </div
+  </div>
+
+13. ### What are the different modules available in Spring?
+
+    Spring Framework contains a lot of features which are well-organized in about 20 modules. These modules can be grouped together based on their primary features into _Core Container_, _Data Access/Integration_, _Web_, _AOP_, _Instrumentation_, _Messaging_, and _Test_, as shown in the following diagram.
+    ![spring-framework-runtime](images/core/spring-framework-runtime.png)
+
+    **Core Container:** The Core Container consists of the Core, Beans, Context, Context-Support and Expression modules.
+
+    `spring-core` & `spring-beans` modules provide the fundamental parts of the framework including IoC and Dependency Injection features. We can use <u>BeanFactory</u> to create the IoC Container. BeanFactory is a sophisticated implementation of the factory design pattern. It removes the need for programmatic singleton design pattern.
+
+    `spring-context` module builds on the solid base provided by the Core & Beans modules. Means to access objects in a framework-style manner we can use Context module which is similar to a JNDI registry. Context module inherits its features from the Beans module and adds support for internationalization, event propagation, resource loading. Context module also supports Java EE features such as EJB, JMX, and basic remoting. We can use ApplicationContext to create the IoC Container similar to BeanFactory but is more advance than BeanFactory.
+
+    `spring-context-support` provides support for integrating common third-party libraries into a Spring application context for caching (EhCache, Guava, JCache), mailing (JavaMail), scheduling (CommonJ, Quartz) and template engines (FreeMarker, JasperReports, Velocity).
+
+    `spring-expression` module provides a powerful Expression Language for querying and manipulating an object graph at runtime. It is an extension of the unified expression language (unified EL) as specified in the JSP 2.1 specification. The language supports setting and getting property values, property assignment, method invocation, accessing the content of arrays, collections and indexers, logical and arithmetic operators, named variables, and retrieval of objects by name from Spring’s IoC container. It also supports list projection and selection as well as common list aggregations.
+
+    **Test:** `spring-test` module supports the unit testing and integration testing of Spring components with JUnit or TestNG. It provides consistent loading of Spring ApplicationContexts and caching of those contexts. It also provides mock objects so that we can test our code in isolation.
+
+    **AOP:** `spring-aop` module provides an AOP Alliance-compliant aspect-oriented programming implementation which allows to separate cross-cutting concerns from core concerns. [Click here](#What-is-an-aspect-oriented-container-framework) for more info.
+
+    **AspectJ:** To provide integration with AspectJ, Spring has provided a separate module `spring-aspects`.
+
+    **Instrumentation:** `spring-instrument` module provides class instrumentation support and classloader implementations to be used in certain application servers. The `spring-instrument-tomcat` module contains Spring’s instrumentation agent for Tomcat.
+
+    **Messaging:** Spring Framework provides extensive support for integrating with messaging systems from simplified use of the JMS API using JmsTemplate to a complete infrastructure to receive messages asynchronously. `Spring AMQP` provides a similar feature set for the Advanced Message Queuing Protocol.
+
+    **Data Access/Integration:** The Data Access/Integration layer consists of the JDBC, ORM, OXM, JMS, and Transaction modules.
+
+    `spring-jdbc` module provides a JDBC-abstraction layer that removes the need to do tedious JDBC coding and parsing of database-vendor specific error codes.
+
+    `spring-tx` module supports programmatic and declarative transaction management for classes that implement special interfaces and for all your POJOs (Plain Old Java Objects).
+
+    `spring-orm` module provides integration layers for popular object-relational mapping APIs, including JPA and Hibernate. Using the spring-orm module we can use these O/R-mapping frameworks in combination with all of the other features Spring offers, such as the simple declarative transaction management feature mentioned previously.
+
+    `spring-oxm` module provides an abstraction layer that supports Object/XML mapping implementations such as JAXB, Castor, JiBX and XStream.
+
+    `spring-jms` module (Java Messaging Service) contains features for producing and consuming messages. Since Spring Framework 4.1, it provides integration with the `spring-messaging` module.
+
+    **Web:** The Web layer consists of the Web, Web MVC, Websocket and Web MVC Portlet modules.
+
+    `spring-web` module provides basic web-oriented integration features such as multipart file upload functionality and the initialization of the IoC container using Servlet listeners and a web-oriented application context. It also contains an HTTP client and the web-related parts of Spring’s remoting support.
+
+    `spring-webmvc` module (also known as the Web-Servlet module) contains Spring’s model-view-controller (MVC) and REST Web Services implementation for web applications. Spring’s MVC framework provides a clean separation between domain model code and web forms and integrates with all of the other features of the Spring Framework.
+
+    WebSocket is a bi-directional, full-duplex, persistent connection between a web browser and a server. Once a WebSocket connection is established the connection stays open until the client or server decides to close this connection. A typical use case could be when an app involves multiple users communicating with each other, like in a chat. By using `spring-websocket` we can build WebSocket applications.
+
+    `spring-webmvc-portlet` is a framework released from Spring community for easier development of Java Portlets. Portlets are web components similar to Servlets managed by Portlet Container (similar to Web Container which manages Servlets). Portlets are components used in the UI layer for displaying the content fetched from different data sources to the end user.
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+14. ### What is POJO?
+
+    **POJO:** POJO stands for `Plain Old Java Object`. If a public class does not implement/extend an prespecified interface/class and does not have any prespecified annotation and can be directly compiled & executable under the JDK without having any classpath reference to a library & framework is called a POJO class. Below `EmployeePojo.java` & `MyThread.java` are POJO classes.
+
+    ```java
+      public class EmployeePojo {
+
+        private String name;
+        private int age;
+        private double salary;
+
+        public EmployeePojo() {
+        }
+
+        public EmployeePojo(String name, int age, double salary) {
+            this.name = name;
+            this.age = age;
+            this.salary = salary;
+        }
+
+        public String empInfo() {
+           return name + " " + age + " " + salary;
+        }
+    }
+    ```
+
+    ```java
+    class MyThread extends Thread {
+
+        public void run() {
+          // ...
+        }
+    }
+    ```
+
+    Followings are not POJO classes:
+
+    ```java
+    public class MyServlet extends javax.servlet.http.HttpServlet {
+        /* MyServlet is not a POJO class because it extends the HttpServlet class which is not a part of Java SE API. HttpServlet is the part of Servlet API.*/
+    }
+    ```
+
+    ```java
+    public class Bar implements javax.ejb.EntityBean {
+        /* Bar is not a POJO class because it implements the EntityBean interface which is not a part of Java SE API. EntityBean is the part of EJB API.*/
+    }
+    ```
+
+    ```java
+    @javax.persistence.Entity
+    public class Foo {
+        /*Foo is not a POJO class because it uses the @Entity annotation which is not a part of Java SE API. @Entity is the part of JPA.*/
+    }
+    ```
+
+    _Note: Prespecified interface/class/annotation means except the JAVA SE API(third party interface/class/annotation). We can even implement `Serializable` interface & follow setter/getter pattern for methods in POJO but it is our own wish._
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+15. ### What is a Java Bean?
+
+    **Java Bean:** A JavaBean is nothing but a POJO class but have a strict set of rules:
+
+    - _Access levels:_ Properties should be private and expose getters and setters.
+    - _Method names:_ Getters & Setters follow the `getX()` & `setX()` convention (in the case of a boolean, `isX()` can be used for a getter).
+    - _Default Constructor:_ A no-argument constructor must be present so that an instance can be created without providing arguments for example during deserialization.
+    - _Serializable:_ Implementing the Serializable interface allows us to store the state.
+
+    Example:- `EmployeeBean.java`
+
+    ```java
+    public class EmployeeBean implements java.io.Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        private String name;
+        private int age;
+        private double salary;
+
+        public EmployeeBean() {
+        }
+
+        public EmployeeBean(String name, int age, double salary) {
+            this.name = name;
+            this.age = age;
+            this.salary = salary;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        // additional getters/setters
+    }
+
+    ```
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+16. ### Similarities and Differences between POJO & Java Bean?
+
+    **Similarities:**
+
+    - Both classes must be public i.e accessible to all.
+    - Properties or variables defined in both classes must be private i.e. can't be accessed directly.
+    - Both classes must have default constructor i.e no argument constructor.
+
+    **Differences:**
+
+    - Java Bean must implement `java.io.Serializable` but it is not mandatory in case of POJO.
+    - There must be getters & setters in Java Bean but it is optional in case of POJO.
+
+    _Note: Due to this we can say, All Java Beans are POJOs but not all POJOs are Java Beans._
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+17. ### What is a Spring Bean?
+
+    A class which contains attributes and methods with business logic to perform some processing and its object is instantiated, assembled and otherwise managed by a Spring IoC container is called a Spring Bean. There is not restriction for creating spring bean. It can refer any third party interface/class/annotation.
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+18. ### Java Bean vs Spring Bean?
+
+    - Java Bean is always serializable, Spring Bean doesn’t need to.
+    - Java Bean must have a default no-arg constructor, Spring Bean doesn’t need to.
+    - Spring bean is managed by Spring IoC Container, Java Bean is not.
+
+    _Note: Every java bean can be a spring bean but every spring bean cannot be a java bean._
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+19. ### What are the ways of collaborating objects?
+
+    In a project, we don't have only one class to fulfil the business requirements. We can have a lot of classes and obviously these classes can't be isolated. Means one class needs another class to complete its functionality. Hence one class will talk to another class. Means one class will reuse its functionality by calling its method. This is nothing but collaborating objects. There are 2 ways of collaborating objects.
+
+    **Inheritance:** The process of acquiring attributes & methods from one class to another class is called Inheritance. The class is being inherited is called Super Class(Parent) and the class that inherits from another class is called Sub Class(Child). The aim of inheritance is to provide the reusability of code so that a class has to write only the unique features and rest of the common properties and functionalities. The biggest advantage of Inheritance is that the code that is already present in super class need not be rewritten in the sub class. Inheritance represents `IS-A` relationship. Means _PhysicsTeacher is a Teacher_. Example: `PhysicsTeacher.java`
+
+    ```java
+    class Teacher {
+        String designation = "Teacher";
+        String collegeName = "IIT Madras";
+
+        void does() {
+           System.out.println("Does(): Teaching");
+        }
+      }
+
+    public class PhysicsTeacher extends Teacher {
+        String mainSubject = "Physics";
+
+        public static void main(String[] args) {
+            PhysicsTeacher pt = new PhysicsTeacher();
+            System.out.println("College Name: "+pt.collegeName);
+            System.out.println("Designation: "+pt.designation);
+            System.out.println("Main Subject: "+pt.mainSubject);
+            pt.does();
+        }
+    }
+    ```
+
+    ```
+    Output:
+      College Name: IIT Madras
+      Designation: Teacher
+      Main Subject: Physics
+      Does(): Teaching
+    ```
+
+    **Association:** Association is the relation between two separate classes which establishes through their Objects. Association relationship indicates how objects know each other and how they are using each other’s functionality. It represents `HAS-A` relationship. Association in Java can have the following relationships.
+
+    - `one-to-one:` A person can have only one passport.
+    - `one-to-many:` A bank can have many employees.
+    - `many-to-one:` Many students work on same project.
+    - `many-to-many:` A user can belong to multiple community, and a community can have multiple users.
+
+    Example: The below program demonstrates an association in Java.
+
+    ```java
+    class Account {
+        private String bankName;
+        private long accountNo;
+
+        Account(String bankName, long accountNo) {
+            this.bankName = bankName;
+            this.accountNo = accountNo;
+        }
+
+        public String getBankName() {
+            return this.bankName;
+        }
+
+        public long getAccountNumber() {
+            return this.accountNo;
+        }
+    }
+
+    class Employee {
+        private String empName;
+
+        Employee(String empName) {
+            this.empName = empName;
+        }
+
+        public String getEmpName() {
+           return empName;
+        }
+    }
+
+    public class Association {
+
+      public static void main(String[] args) {
+          Employee emp = new Employee("Andrew");
+          Account acc = new Account("Citi Bank", 12345);
+          System.out.println(emp.getEmpName() + " has an account with " + acc.getBankName() + " with Account Number:" + acc.getAccountNumber());
+      }
+    }
+    ```
+
+    ```
+    Output: Andrew has an account with Citi Bank with Account Number:12345
+    ```
+
+    Here, we have a class `Account` that has a bankName and accountNo. Next, we have an `Employee` class. We know that every employee will have an account number for depositing salary etc. So what we do is, instead of writing another class or method to read the Employee’s bank account details, we directly reuse the existing Account class. In other words, we associate an `Account` object with the `Employee` so that we get the Employee’s bank account details.
+
+    There are 2 forms of Association.
+
+    **1. Aggregation:** It is a unidirectional association i.e. a one way relationship. For example, department can have students but vice versa is not possible. In Aggregation, both the entities(objects) can survive individually which means ending one entity will not effect the other entity(object). Therefore, it is often referred to as weak association. Let’s take the example of a player and a team.
+
+    ```java
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.stream.Collectors;
+
+    class Team {
+      private String teamName;
+      private List<Player> players;
+
+      public Team(String teamName, List<Player> players) {
+        this.teamName = teamName;
+        this.players = players;
+      }
+
+      private List<String> getPlayerInfo() {
+        return players.stream().map(player -> player.getPlayerName() + "(" + player.getPlayerAge() + ")").collect(Collectors.toList());
+      }
+
+      public String getTeamInfo() {
+        return teamName + ": " + getPlayerInfo();
+      }
+    }
+
+    class Player {
+      private String playerName;
+      private int playerAge;
+
+      public Player(String playerName, int playerAge) {
+        this.playerName = playerName;
+        this.playerAge = playerAge;
+      }
+
+      public String getPlayerName() {
+        return playerName;
+      }
+
+      public int getPlayerAge() {
+        return playerAge;
+      }
+    }
+
+    public class Aggregation {
+
+      public static void main(String[] args) {
+        Player player1 = new Player("David Warner", 34);
+        Player player2 = new Player("Rashid Khan", 22);
+
+        List<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+
+        Team team = new Team("Sunrisers Hyderabad", players);
+        System.out.println(team.getTeamInfo());
+      }
+    }
+
+    ```
+
+    ```
+    Output: Sunrisers Hyderabad: [David Warner(34), Rashid Khan(22)]
+
+    ```
+
+    Here if we destroy the team object, but still player1 & player2 objects will be alive.
+
+    **2. Composition:** It is a restricted form of Aggregation in which two entities (or we can say classes) are highly dependent on each other. For e.g. Human and Heart. A human needs a heart to live and a heart cannot survive without a human body.
+
+    ```java
+    class Human {
+        private String name;
+        private Heart heart;
+
+        public Human(String name) {
+            this.name = name;
+            heart = new Heart(290, 72);
+        }
+
+        public String getHumanInfo() {
+            return name + ": " + heart.toString();
+        }
+    }
+
+    class Heart {
+        private int weight;
+        private int heartBeat;
+
+        public Heart(int weight, int heartBeat) {
+          this.weight = weight;
+          this.heartBeat = heartBeat;
+        }
+
+        @Override
+        public String toString() {
+          return "Heart [weight=" + weight + "grams, heartBeat=" + heartBeat + "times/min]";
+        }
+    }
+
+    public class Composition {
+        public static void main(String[] args) {
+            Human human = new Human("David");
+            System.out.println(human.getHumanInfo());
+        }
+    }
+
+    ```
+
+    ```
+    Output: David: Heart [weight=290grams, heartBeat=72times/min]
+
+    ```
+
+    Here, if we destroy the human object, the heart object will also be destroyed.
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+20. ### Differences Between Inheritance Vs Composition?
+
+    | Inheritance                                                                        | Composition                                            |
+    | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
+    | Inheritance represents 'Is-A' relationship.                                        | Composition depicts the 'Has-A' relationship.          |
+    | A class can extend only one class. Therefore, we can reuse code of only one class. | In composition, we can reuse code of multiple classes. |
+    | Inheritance is a static or compile time binding.                                   | Composition is a dynamic or run time-binding.          |
+    | We cannot reuse code from the final class.                                         | It allows code reusability even from final classes.    |
+    | It exposes both public and protected methods.                                      | It allows to invoke only public methods.               |
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+21. ### Difference between Tightly coupled & Loosely coupled?
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
