@@ -1278,3 +1278,9 @@
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
+
+28. ### What is BeanFactory?
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
