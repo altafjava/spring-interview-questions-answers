@@ -31,6 +31,11 @@
 | 20  | [Differences Between Inheritance Vs Composition?](#Differences-Between-Inheritance-Vs-Composition)                                                                    |
 | 21  | [When to use Inheritance?](#When-to-use-Inheritance)                                                                                                                  |
 | 22  | [When to use Composition?](#When-to-use-Composition)                                                                                                                  |
+| 23  | [Difference between Tight coupling & Loose coupling?](#Difference-between-Tight-coupling--Loose-coupling)                                                             |
+| 24  | [Describe "_Favour composition over inheritance_".](#Describe-Favour-composition-over-inheritance)                                                                    |
+| 25  | [Describe "_Program to an interface, not an implementation_".](#Describe-Program-to-an-interface-not-an-implementation)                                               |
+| 26  | [What is the Open-Closed principle?](#What-is-the-Open-Closed-principle)                                                                                              |
+| 27  | [What is a Design Pattern?](#What-is-a-Design-Pattern)                                                                                                                |
 
 ## Spring Core
 
@@ -76,24 +81,21 @@
 
    For example, say our application has a text editor component and we want to provide spell checking. Our standard code would look something like this:
 
-   ```
+   ```java
    public class TextEditor {
-
-     private SpellChecker checker = new SpellChecker();
-
+       private SpellChecker checker = new SpellChecker();
    }
    ```
 
    Here TextEditor needs a SpellChecker object. Means TextEditor is dependent on SpellChecker and we are manually instantiating the TextEditor object. Means we are managing the dependency. Means we have the control. Now look at the below code:
 
-   ```
+   ```java
    public class TextEditor {
+      private SpellChecker checker;
 
-    private SpellChecker checker;
-
-    public TextEditor(SpellChecker checker) {
-        this.checker = checker;
-    }
+      public TextEditor(SpellChecker checker) {
+          this.checker = checker;
+      }
    }
    ```
 
@@ -133,7 +135,7 @@
 
    - **Dependency Injection:** The process of injecting the dependent object into the target object is nothing but dependency injection. Let's take an example: There is an Employee class. It requires an Address object. Means Employee class is a target object & the Address is class dependent.
 
-     ```
+     ```java
      @Component
      class Employee {
        private int id;
@@ -148,7 +150,7 @@
      }
      ```
 
-     ```
+     ```java
      @Component
      class Address {
        private String street;
@@ -369,8 +371,7 @@
     **POJO:** POJO stands for `Plain Old Java Object`. If a public class does not implement/extend an prespecified interface/class and does not have any prespecified annotation and can be directly compiled & executable under the JDK without having any classpath reference to a library & framework is called a POJO class. Below `EmployeePojo.java` & `MyThread.java` are POJO classes.
 
     ```java
-      public class EmployeePojo {
-
+    public class EmployeePojo {
         private String name;
         private int age;
         private double salary;
@@ -392,7 +393,6 @@
 
     ```java
     class MyThread extends Thread {
-
         public void run() {
           // ...
         }
@@ -650,7 +650,6 @@
     }
  
     public class Aggregation {
- 
       public static void main(String[] args) {
         Player player1 = new Player("David Warner", 34);
         Player player2 = new Player("Rashid Khan", 22);
@@ -811,6 +810,470 @@
        ```
  
        This results in simpler, less coupled code that will be easier to understand and maintain.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+23. ### Difference between Tight coupling & Loose coupling?
+
+    A situation where an object can be used by another object is termed as coupling. It is the process of collaborating together and working for each other. It simply means that one class requires another class to complete its task. There are 2 types of coupling.
+
+    **1. Tight coupling:** When one class is highly dependent on another class. Means a class creates objects of another class to call its methods so that fulfil its functionality becomes tightly coupled. This scenario arises when a class assumes too many responsibilities or when one concern is spread over many classes rather than having its own class.
+
+    Let's understand by an example: There is a Manager class which is dependent on SmartWorker class. Means until Manager has not smartWorker object it cannot complete its functionality. Therefore, Manager is creating an object of SmartWorker and calling its method.
+
+    ```java
+    class LazyWorker {
+        public void work() {
+            System.out.println("Lazy Worker working");
+        }
+    }
+
+    class Manager {
+        LazyWorker lazyWorker = new LazyWorker();
+
+        public void manage() {
+            lazyWorker.work();
+        }
+    }
+
+    public class TightlyCoupled {
+        public static void main(String[] args) {
+            Manager manager = new Manager();
+            manager.manage();
+        }
+    }
+    ```
+
+    Let’s say the requirement changes and the Manager wants to add one more worker that is SmartWorker. What shall we do now? We can create a class for SmartWorker and create an object and call its method like below.
+
+    ```java
+    class SmartWorker {
+        public void work() {
+            System.out.println("Smart Worker working");
+        }
+    }
+
+    class LazyWorker {
+        public void work() {
+            System.out.println("Lazy Worker working");
+        }
+    }
+
+    class Manager {
+        LazyWorker lazyWorker = new LazyWorker();
+        SmartWorker smartWorker = new SmartWorker();
+
+        public void manage() {
+            lazyWorker.work();
+            smartWorker.work();
+        }
+    }
+
+    public class TightlyCoupled {
+        public static void main(String[] args) {
+            Manager manager = new Manager();
+            manager.manage();
+        }
+    }
+    ```
+
+    It's very simple right? but we notice that the source code is tightly coupled and that’s the reason we had to modify the existing Manager class.
+    We saw that Manager class was modified at two places. Add an extra object of `smartWorker` and modified `manageWork()` method. Therefore, it violets the [open–closed principle](#What-is-Open-Closed-principle) (A class should be open for extension but closed for modification). The main problem with tightly coupled code is, it requires modification and testing. This is a simple program, but consider it is a large project and Manager class is very complex and has tons of operations to perform. As we know in real time no product is released without testing. Hence tightly coupled code means
+
+    - more developer effort
+    - more developer time
+    - more tester effort
+    - more tester timer
+    - more cost
+    - slow application development
+    - project may be delayed
+
+    **2. Loose coupling:** Loose coupling means objects are independent to each other. A loosely coupled code reduces maintenance and efforts. We can achieve loose coupling by using interface & dependency injection. Let's make the above example as loosely coupled.
+
+    ```java
+    interface IWorker {
+        void work();
+    }
+
+    class SmartWorkerImpl implements IWorker {
+        @Override
+        public void work() {
+            System.out.println("Smart Worker working");
+        }
+    }
+
+    class LazyWorkerImpl implements IWorker {
+        @Override
+        public void work() {
+            System.out.println("Lazy Worker working");
+        }
+    }
+
+    class Manager {
+        IWorker worker = null;
+
+        public void setWorker(IWorker worker) {
+            this.worker = worker;
+        }
+
+        public void manage() {
+            worker.work();
+        }
+    }
+
+    public class LooselyCoupled {
+        public static void main(String[] args) {
+            Manager manager = new Manager();
+            LazyWorkerImpl lazyWorker = new LazyWorkerImpl();
+            manager.setWorker(lazyWorker);
+            manager.manage();
+            SmartWorkerImpl smartWorker = new SmartWorkerImpl();
+            manager.setWorker(smartWorker);
+            manager.manage();
+        }
+    }
+    ```
+
+    Here, we have created an interface `IWorker` and `LazyWorkerImpl` is implementing it. In Manager class we have just declared the interface but not directly creating the object of `LazyWorkerImpl`. Instead we have a setter method `setWorker()` which will be used to set the required implementation object of `IWorker`. This is nothing but dependency injection(setter injection).
+
+    Now let’s say requirement changes and Manager want to add one more worker that is SmartWorker. In this case we just need to create another implementation class of `IWorker` that is `SmartWorkerImpl` and pass this object whenever it is required. We don't need to change anything in Manager class. Now creating the object(LazyWorker & SmartWorker) and managing these dependencies is taken care of by our main class i.e. `LooselyCoupled` class. So, if we use Spring framework, this responsibility is transferred to Spring IoC container. In the above program to make it loosely coupled we have have followed certain principles like
+
+    - create an interface.
+    - create a setter method for injecting the dependent(target) class.
+    - not directly creating objects using concrete class.
+
+    **Hence to work with Spring also, we need to follow some object oriented principles and make our dependent classes(beans) according to the principle so that our classes will be loosely coupled and Spring can effectively manage them. These object oriented principles are:**
+
+    1. **_Favour composition over inheritance_**
+    2. **_Program to an interface, not an implementation_**
+    3. **_Open-Closed Principle_**
+    4. _Don't repeat yourself_
+    5. _Encapsulate What Changes_
+    6. _Delegation principles_
+    7. _Single Responsibility Principle_
+    8. _Liskov Substitution Principle_
+    9. _Interface Segregation Principle_
+    10. _Dependency Inversion Principle_
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+24. ### Describe "_Favour composition over inheritance_".
+ 
+    _Favor composition over inheritance_ is a one of the popular object-oriented design principles, which helps to create flexible and maintainable code in Java and other object-oriented languages. Using both(composition & inheritance) we can reuse the code but according to this design principle, it is recommended to use composition instead of using inheritance. Let's see why it is recommended?
+ 
+    - If we need multiple functionalities(for example reading & writing data into a file), we need to extend two classes Reader & Writer and as we know java doesn't support multiple inheritance. Therefore, in this case we can't go for inheritance. Hence by using composition we can solve this problem.
+ 
+    - Composition offers better test-ability of a class than Inheritance. If one class is composed of another class, we can easily create a Mock object representing the composed class for sake of testing. Inheritance doesn't provide this luxury. In order to test derived class, we must need its super class. Since unit testing is one of the most important things to consider during software development, especially in test driven development, composition wins over inheritance.
+ 
+      Example: `will be added soon`
+ 
+    - Most of the design patterns use composition over inheritance. For example in Strategy design pattern, composition is used to change the Context’s behavior without touching Context code. Context uses composition to hold the strategy, instead of getting it via inheritance.
+ 
+      ```java
+      import java.util.Scanner;
+ 
+      interface PayStrategy {
+        boolean pay(int amount);
+      }
+ 
+      class GooglePayStrategy implements PayStrategy {
+        @Override
+        public boolean pay(int amount) {
+          System.out.println("Paying " + amount + " using GooglePay");
+          return true;
+        }
+      }
+ 
+      class PhonePayStrategy implements PayStrategy {
+        @Override
+        public boolean pay(int amount) {
+          System.out.println("Paying " + amount + " using PhonePay");
+          return true;
+        }
+      }
+      // Factory class to create the implementation of Strategy
+      class PayStrategyFactory {
+        public PayStrategy createPay(int payerId) {
+          if (payerId == 1)
+            return new GooglePayStrategy();
+          else if (payerId == 2)
+            return new PhonePayStrategy();
+          else {
+            return null;
+          }
+        }
+      }
+ 
+      class Context {
+        PayStrategy payStrategy = null;
+ 
+        public Context(PayStrategy payStrategy) {
+          this.payStrategy = payStrategy;
+        }
+ 
+        public boolean execute(int amount) {
+          return payStrategy.pay(amount);
+        }
+      }
+ 
+      public class Test {
+        public static void main(String[] args) {
+          // GooglePay=1, PhonePay=2
+          System.out.println("Enter Payer Id: ");
+          Scanner sc = new Scanner(System.in);
+          int payerId = sc.nextInt();
+          sc.close();
+ 
+          PayStrategyFactory payStrategyFactory = new PayStrategyFactory();
+          PayStrategy payStrategy = payStrategyFactory.createPay(payerId);
+ 
+          if (payStrategy == null) {
+            System.err.println("Error: Invalid payer id");
+          } else {
+            Context context = new Context(payStrategy);
+            context.execute(500);
+          }
+        }
+      }
+      ```
+ 
+    - Inheritance breaks encapsulation. Inheritance forces the developer of the subclass to know about the internals of the superclass, which means the encapsulation in the superclass is broken.
+ 
+      ```java
+      import java.util.Arrays;
+      import java.util.Collection;
+      import java.util.HashSet;
+ 
+      class MyHashSet extends HashSet<String> {
+        public int addCount = 0;
+ 
+        @Override
+        public boolean add(String element) {
+          addCount += 1;
+          return super.add(element);
+        };
+ 
+        @Override
+        public boolean addAll(Collection collection) {
+          addCount += collection.size();
+          return super.addAll(collection);
+        }
+      }
+ 
+      public class Test {
+        public static void main(String[] args) {
+          MyHashSet mhs = new MyHashSet();
+          mhs.addAll(Arrays.asList("One", "Two", "Three"));
+          System.out.println("Add Count= " + mhs.addCount);
+        }
+      }
+ 
+      ```
+ 
+      ```
+      Output: Add Count= 6
+      ```
+ 
+      It is entirely non-obvious why `addCount` would return `6` instead of `3`. After all, we only added three elements, right? The answer is `HashSet.addAll()` method invokes the `add()` method internally. This means, when we call `mhs.addAll()` method by passing three values, addCount value increases by 3. Inside the `addAll(Collection collection)` method we are calling `super.addAll(collection)` which internally calls the `add()` method 3 times and as we are incrementing on every add operation by one which results 3+1+1+1=6.
+ 
+      Hence to solve this kind of problem, the best approach would be to use composition.
+ 
+      ```java
+      import java.util.Arrays;
+      import java.util.Collection;
+      import java.util.HashSet;
+ 
+      class MyHashSet {
+        public int addCount = 0;
+ 
+        private HashSet<String> hashSet = new HashSet<>();
+ 
+        public boolean add(String element) {
+          addCount += 1;
+          return hashSet.add(element);
+        }
+ 
+        public boolean addAll(Collection collection) {
+          addCount += collection.size();
+          return hashSet.addAll(collection);
+        }
+      }
+ 
+      public class InheritanceSolutionTest {
+        public static void main(String[] args) {
+          MyHashSet myHashSet = new MyHashSet();
+          myHashSet.addAll(Arrays.asList("One", "Two", "Three"));
+          System.out.println("Add Count= " + myHashSet.addCount);
+        }
+      }
+ 
+      ```
+ 
+      ```
+      Output: Add Count= 3
+      ```
+ 
+    - Inheritance is more tightly coupled compared to composition.
+ 
+        ```java
+        class X {
+          public void doo() {
+          }
+        }
+
+        class Y extends X {
+          public void work() {
+            doo();
+          }
+        }
+        ```
+
+        As clear in above code, class Y has very strong coupling with class X. If anything changes in superclass X, Y may break dramatically. Suppose in future, class X creates a new method `work()` with the below signature:
+
+        ```java
+        public int work() {
+          return 0;
+        }
+        ```
+
+        Change is done in class X but it will make class Y uncompilable[`The return type is incompatible with
+        X.work()`]. So this kind of dependency can go up to any level and it can be very dangerous. So we can avoid this tight and unnecessary coupling by using composition.
+
+        ```java
+        class X {
+          public int work() {
+            return 0;
+          }
+
+          public void doo() {
+          }
+        }
+
+        class Y {
+          X x = new X();
+
+          public void work() {
+            x.doo();
+          }
+        }
+
+        ```
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+25. ### Describe "_Program to an interface, not an implementation_".
+ 
+    Whenever we build a larger piece of application, we shall have dependencies to each other classes and these dependencies result tightly coupled to each other classes. Therefore, to make this coupling loosely coupled, we can use interfaces. If we depend on interfaces only, we are decoupled from the implementation. That means the implementation can vary and that's a healthy dependency relationship. For example, for testing purposes we can replace a heavy database implementation with a lighter-weight mock implementation. If we have multiple strategies or algorithms then it is very easy to switch among them if we use this principle. Simply we can say, this principle is used in Strategy Design Pattern.
+ 
+    ```java
+    import java.util.Arrays;
+    import java.util.List;
+ 
+    interface Database {
+      String findById(int id);
+      List<String> findAll();
+    }
+ 
+    class HeavyWeightDatabase implements Database {
+      @Override
+      public String findById(int id) {
+        return "HeavyWeightDatabase: returning data with id " + id;
+      }
+ 
+      @Override
+      public List<String> findAll() {
+        return Arrays.asList("HWD1", "HWD2", "HWD3");
+      }
+    }
+ 
+    class LightWeightDatabase implements Database {
+      @Override
+      public String findById(int id) {
+        return "LightWeightDatabase: returning data with id " + id;
+      }
+ 
+      @Override
+      public List<String> findAll() {
+        return Arrays.asList("LWD1", "LWD2", "LWD3");
+      }
+    }
+ 
+    class DatabaseFactory {
+      public Database createDatabaseImpl(String profile) {
+        if (profile.equals("prod")) {
+          return new HeavyWeightDatabase();
+        } else {
+          return new LightWeightDatabase();
+        }
+      }
+    }
+ 
+    class DatabaseService {
+      Database database = null;
+ 
+      public DatabaseService(Database database) {
+        this.database = database;
+      }
+ 
+      public List<String> getAllData() {
+        return database.findAll();
+      }
+ 
+      public String getData(int id) {
+        return database.findById(id);
+      }
+    }
+ 
+    public class Main {
+      public static void main(String[] args) {
+        DatabaseFactory databaseFactory = new DatabaseFactory();
+    //    String profile = "prod";
+        String profile = "dev";
+        Database database = databaseFactory.createDatabaseImpl(profile);
+        DatabaseService databaseService = new DatabaseService(database);
+        System.out.println(databaseService.getData(123));
+        System.out.println(databaseService.getAllData());
+      }
+    }
+    ```
+ 
+    In the above example, `DatabaseService` don't know the implementation class of `Database` interface and without changing the source code of `DatabaseService` we can easily switch from HeavyWeightDatabase to LightWeightDatabase or vice-versa. This is possible because of this principle. If we don't use this principle and need to change from HeavyWeightDatabase to LightWeightDatabase or vice-versa we will have to modify the `DatabaseService` class which is not recommended.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+26. ### What is the Open-Closed principle?
+ 
+    The Open-Closed Principle is one of the `SOLID` design principles. SOLID contains five principles which were described by Robert C Martin. SOLID stands for
+ 
+    - S - Single Responsibility Principle
+    - O - Open-Closed Principle
+    - L - Liskov Substitution Principle
+    - I - Interface Segregation Principle
+    - D - Dependency Inversion
+ 
+    The open–closed principle states that "_Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification_". Means, such an entity can allow its behaviour to be extended without modifying its source code. In the above code(Manager/Worker, GooglePayStrategy/PhonePayStrategy and HeavyWeightDatabase/LightWeightDatabase), we have seen how we have implemented this principle by using interfaces.
+ 
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+ 
+27. ### What is a Design Pattern?
+ 
+    Design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design. It is not a finished design that can be transformed directly into source code. Rather, it is a description or template for how to solve a problem that can be used in many different situations. Design patterns are formalized best practices that the programmer can use to solve common problems when designing an application or system.
+ 
+    In 1994, four authors Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides published a book titled _Design Patterns - Elements of Reusable Object-Oriented Software_ which initiated the concept of Design Pattern in Software development. These authors are collectively known as `Gang of Four(GoF)`. There are a total 23 GoF design patterns. GoF Design Patterns are divided into three categories.
+ 
+    1. **Creational:** Abstract Factory, Builder, Factory Method, Prototype, Singleton
+    2. **Structural:** Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy
+    3. **Behavioral:** Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor
  
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
