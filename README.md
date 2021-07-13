@@ -8,7 +8,7 @@
 
 | No. | Questions                                                                                                                                                             |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     | **Spring Core**                                                                                                                                                       |
+|     | **Introduction**                                                                                                                                                      |
 | 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                                                                                                |
 | 2   | [What is open source?](#What-is-open-source)                                                                                                                          |
 | 3   | [What is an application framework?](#What-is-an-application-framework)                                                                                                |
@@ -36,12 +36,14 @@
 | 25  | [Describe "_Program to an interface, not an implementation_".](#Describe-Program-to-an-interface-not-an-implementation)                                               |
 | 26  | [What is the Open-Closed principle?](#What-is-the-Open-Closed-principle)                                                                                              |
 | 27  | [What is a Design Pattern?](#What-is-a-Design-Pattern)                                                                                                                |
+| 28  | [What is IoC Container?](#What-is-IoC-Container)                                                                                                                      |
+| 29  | [What is Configuration Metadata?](#What-is-Configuration-Metadata)                                                                                                    |
 
-## Spring Core
+## Introduction
 
 1. ### What is Spring Framework?
 
-   Spring Framework is an open source application framework. We can also say that it is a lightweight inversion of control(IoC) container and aspect-oriented container framework for the Java platform. Spring handles the infrastructure so that we can focus on our application development. It was created by Rod Johnson. In 2003 Spring came into existence.
+   Spring Framework is an open source application framework. We can also say that it is a lightweight inversion of control(IoC) container and aspect-oriented container framework for the Java platform. Spring handles the infrastructure so that we can focus on our application development. It was created by **Rod Johnson**. In 2003 Spring came into existence.
 
    <div align="right">
        <b><a href="#table-of-contents">⬆ Back to Top</a></b>
@@ -1275,6 +1277,69 @@
     2. **Structural:** Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy
     3. **Behavioral:** Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor
  
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+28. ### What is IoC Container?
+
+    IoC Container is a container of [Spring Beans](#What-is-a-Spring-Bean). The main objective of this container is to create the objects, wire them together, configure and manage their complete life cycle from creation till destruction. We provide Spring Beans(POJO) and some configuration metadata to the IoC container. IoC container reads the configuration metadata, wire the beans each other and manage beans lifecycle accordingly and provide us fully configured system(Ready for use).
+
+    ![container-configuration-metadata](images/core/container-configuration-metadata.png)
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+29. ### What is Configuration Metadata?
+
+    Configuration Metadata is the details of all spring beans which may be dependent or independent with each other that represents how we as an application developer tell the Spring container to instantiate, configure, and assemble the objects in our application. Configuration metadata can be supplied in 3 forms.
+
+    - **XML-based configuration:** Configuration metadata is traditionally supplied in a simple and intuitive XML format. Means XML-based configuration introduced from beginning of the Spring framework. We can configure spring bean with `<bean>` element which is inside a root element `<beans>`. A `<bean>` element is also called as Beans definition.
+
+      ```xml
+      <?xml version="1.0" encoding="UTF-8"?>
+      <beans xmlns="http://www.springframework.org/schema/beans"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean id="..." class="...">
+          <!-- collaborators and configuration for this bean go here -->
+        </bean>
+
+        <bean id="..." class="...">
+          <!-- collaborators and configuration for this bean go here -->
+        </bean>
+
+        <!-- more bean definitions go here -->
+
+      </beans>
+      ```
+
+      The `id` attribute is a string which can be used to identify the individual bean definition. The `class` attribute defines the type of the bean and uses the fully qualified classname. Like `id` & `class`, there are more attributes of `<bean>` which will be discussed later.
+
+    - **Annotation-based configuration:** Spring 2.5 introduced support for annotation-based configuration metadata. This is the another way of defining beans. In Spring 2.0 and later, the `@Repository` annotation is a marker for any class that fulfills the role(stereotype) of a repository (also known as Data Access Object or DAO). Spring 2.5 introduces further stereotype annotations: `@Component`, `@Service`, and `@Controller`. `@Component` is a generic stereotype for any Spring-managed component.
+    - **Java-based configuration:** Java-based configuration option enables us to write most of our Spring configuration without XML but with the help of few Java-based annotations. In this configuration we generally make a class annotated with `@Configuration` annotation and make a method annotated with `@Bean` annotation. Annotating a class with the `@Configuration` indicates that the class can be used by the Spring IoC container as a source of bean definitions. The `@Bean` annotation tells Spring that a method annotated with `@Bean` will return an object that should be registered as a bean in the Spring IOC container. The simplest possible `@Configuration` class would be as follows:
+
+      ```java
+      @Configuration
+      public class AppConfig {
+          @Bean
+          public TransferService transferService() {
+              return new TransferServiceImpl();
+          }
+      }
+      ```
+
+      The above code is exactly equivalent to the following XML configuration.
+
+      ```xml
+      <beans>
+        <bean name="transferService" class="com.altafjava.TransferServiceImpl"/>
+      </beans>
+      ```
+
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
