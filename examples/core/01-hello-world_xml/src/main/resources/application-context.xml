@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="greetingServiceImpl" class="com.altafjava.bean.impl.GreetingServiceImpl"></bean>
+
+	<bean id="greetingManager" class="com.altafjava.service.GreetingManager">
+		<property name="greetingService" ref="greetingServiceImpl"></property>
+	</bean>
+	
+</beans>

@@ -38,6 +38,10 @@
 | 27  | [What is a Design Pattern?](#What-is-a-Design-Pattern)                                                                                                                |
 | 28  | [What is IoC Container?](#What-is-IoC-Container)                                                                                                                      |
 | 29  | [What is Configuration Metadata?](#What-is-Configuration-Metadata)                                                                                                    |
+| 30  | [How many types of IoC container/how to create IoC container?](#How-many-types-of-IoC-containerhow-to-create-IoC-container)                                           |
+| 31  | [BeanFactory vs ApplicationContext?](#BeanFactory-vs-ApplicationContext)                                                                                              |
+|     | **Spring Core**                                                                                                                                                       |
+| 32  | [What is Bean scope?](#What-is-Bean-scope)                                                                                                                            |
 
 ## Introduction
 
@@ -175,7 +179,7 @@
 
      **Note:** Spring supports only Constructor and Setter Injection.
 
-   - **IOC Container:** Spring has provided a container which is responsible for collaborating objects & managing the lifecycle of objects. There are two ways for collaborating objects.
+   - **IoC Container:** Spring has provided a container which is responsible for collaborating objects & managing the lifecycle of objects. There are two ways for collaborating objects.
 
      1. Dependency Pulling
 
@@ -227,7 +231,7 @@
    Technical Differences between Spring & Struts:
    | Spring | Struts |
    | --------------------------- | ---------------------------- |
-   | Spring is an application framework which implements both MVC & IOC design pattern.| Struts is a web framework which implements only MVC design pattern. |
+   | Spring is an application framework which implements both MVC & IoC design pattern.| Struts is a web framework which implements only MVC design pattern. |
    | Spring is a layered architecture. | Struts is a not a layered architecture. |
    | Spring provides abstraction layer on multiple Java technologies including Servlet, JSPs as well as on other framework software like Hibernate, Tapestry, EJB, JSF etc. | Struts provides abstraction layer only on Servlet, JSP technology. |
    | Spring is a lightweight framework which is loosely coupled. | Struts is a heavyweight framework which is tightly coupled. |
@@ -1317,10 +1321,10 @@
       </beans>
       ```
 
-      The `id` attribute is a string which can be used to identify the individual bean definition. The `class` attribute defines the type of the bean and uses the fully qualified classname. Like `id` & `class`, there are more attributes of `<bean>` which will be discussed later.
+      The `id` attribute is a string which can be used to identify the individual bean definition. The `class` attribute defines the type of the bean and uses the fully qualified classname. Like `id` & `class`, there are more attributes of `<bean>` which will be discussed later. See example [here](examples/core/01-hello-world_xml).
 
-    - **Annotation-based configuration:** Spring 2.5 introduced support for annotation-based configuration metadata. This is the another way of defining beans. In Spring 2.0 and later, the `@Repository` annotation is a marker for any class that fulfills the role(stereotype) of a repository (also known as Data Access Object or DAO). Spring 2.5 introduces further stereotype annotations: `@Component`, `@Service`, and `@Controller`. `@Component` is a generic stereotype for any Spring-managed component.
-    - **Java-based configuration:** Java-based configuration option enables us to write most of our Spring configuration without XML but with the help of few Java-based annotations. In this configuration we generally make a class annotated with `@Configuration` annotation and make a method annotated with `@Bean` annotation. Annotating a class with the `@Configuration` indicates that the class can be used by the Spring IoC container as a source of bean definitions. The `@Bean` annotation tells Spring that a method annotated with `@Bean` will return an object that should be registered as a bean in the Spring IOC container. The simplest possible `@Configuration` class would be as follows:
+    - **Annotation-based configuration:** Spring 2.5 introduced support for annotation-based configuration metadata. This is the another way of defining beans. In Spring 2.0 and later, the `@Repository` annotation is a marker for any class that fulfills the role(stereotype) of a repository (also known as Data Access Object or DAO). Spring 2.5 introduces further stereotype annotations: `@Component`, `@Service`, and `@Controller`. `@Component` is a generic stereotype for any Spring-managed component. See example [here](examples/core/01-hello-world_annotation).
+    - **Java-based configuration:** Java-based configuration option enables us to write most of our Spring configuration without XML but with the help of few Java-based annotations. In this configuration we generally make a class annotated with `@Configuration` annotation and make a method annotated with `@Bean` annotation. Annotating a class with the `@Configuration` indicates that the class can be used by the Spring IoC container as a source of bean definitions. The `@Bean` annotation tells Spring that a method annotated with `@Bean` will return an object that should be registered as a bean in the Spring IoC container. The simplest possible `@Configuration` class would be as follows:
 
       ```java
       @Configuration
@@ -1340,6 +1344,90 @@
       </beans>
       ```
 
+      See example [here](examples/core/01-hello-world_javaconfig).
+
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
+
+30. ### How many types of IoC container/how to create IoC container?
+
+    Spring provides two types of IoC containers.
+
+    1. **BeanFactory container:-** BeanFactory was introduced in the early age of the Spring. This is the basic container which instantiates, configures and manages a number of beans. Nowadays people are going for ApplicationContext instead of BeanFactory. The main usage scenario when we might prefer to use the BeanFactory is when memory usage is the greatest concern(such as in an applet where every last KB counts) and we don't need all the features of the ApplicationContext. A BeanFactory is represented by the interface `org.springframework.beans.factory.Beanfactory`, for which there are multiple implementations. The most commonly used simple BeanFactory implementation is `org.springframework.beans.factory.xml.XmlBeanFactory`. We can instantiate XmlBeanFactory as follows:
+
+       ```java
+       Resource resource = new FileSystemResource("src/main/resources/application-context.xml");
+       BeanFactory beanFactory = new XmlBeanFactory(resource);
+       ```
+
+       or
+
+       ```java
+       Resource resource = new ClassPathResource("application-context.xml");
+       BeanFactory beanFactory = new XmlBeanFactory(resource);
+       ```
+
+       We can create `FileSystemResource` as:
+
+       ```java
+       String path = "src/main/resources/application-context.xml";
+       Resource resource = new FileSystemResource(path);
+       resource = new FileSystemResource(new File(path));
+       resource = new FileSystemResource(Paths.get(path));
+       resource = new FileSystemResource(FileSystems.getDefault(), path);
+       ```
+
+    2. **ApplicationContext container:-** ApplicationContext is the advanced container of BeanFactory. ApplicationContext has build on the top of the BeanFactory(It is the subclass of BeanFactory) and adds more enterprise-specific functionalities such as easier integration with Spring's AOP features, integrated lifecycle management, automatic `BeanPostProcessor` registration, Automatic `BeanFactoryPostProcessor` registration, convenient message resource handling(for use in Internationalization), built-in `ApplicationEvent` publication mechanism, etc. Because an ApplicationContext includes all the functionality of a BeanFactory, it is generally recommended over a plain BeanFactory. An ApplicationContext is represented by the interface `org.springframework.context.ApplicationContext` which has multiple implementations. The most commonly used ApplicationContext implementations are:
+
+       - _FileSystemXmlApplicationContext:–_ This container loads the definitions of the beans from an XML file. Here we need to provide the full path of the XML bean configuration file to the constructor.
+
+         ```java
+         String path = "src/main/resources/application-context.xml";
+         ApplicationContext applicationContext = new FileSystemXmlApplicationContext(path);
+         ```
+
+       - _ClassPathXmlApplicationContext:–_ This container loads the definitions of the beans from an XML file. This container will look at the XML bean configuration file in CLASSPATH.
+         ```java
+         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+         ```
+         Here the `application-context.xml` file is present inside the `src/main/resources` directory which is by default CLASSPATH location if we use any IDE like Eclipse.
+       - _XmlWebApplicationContext:–_ XmlWebApplicationContext is used to represent Spring Container for web applications. It loads bean definitions from an XML file contained within a web application. By default it loads the configuration file from `"/WEB-INF"` location.
+
+         ```java
+         XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
+         applicationContext.setConfigLocation("/WEB-INF/application-context.xml");
+         applicationContext.refresh();
+         ```
+
+       - _AnnotationConfigApplicationContext:-_ AnnotationConfigApplicationContext class is used when we are using Java-based configuration for the bean definitions instead of Xml files.
+         ```java
+         ApplicationContext applicationContext=new AnnotationConfigApplicationContext(AppConfig.class);
+         ```
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+31. ### BeanFactory vs ApplicationContext?
+    | BeanFactory                                                                                                                                                                                                                                              | ApplicationContext                                                                                                                                                                                                                 |
+    | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | Beans are instantiated when they get requested for the first time, not when the object of BeanFactory itself gets created. When we call `beanFactory.getBean(Manager.class)` then the Manager bean will be created. This is known as lazy-instantiation. | Singleton beans do not get created lazily. By default ApplicationContext immediately instantiates the singleton beans and wire/set its properties just after creation of ApplicationContext. This is known as eager-instantiation. |
+    | BeanFactory only supports two scopes(Singleton & Prototype).                                                                                                                                                                                             | ApplicationContext supports almost all types of bean scopes.                                                                                                                                                                       |
+    | BeanFactory does not register BeanFactoryPostProcessor & BeanPostProcessor automatically at startup.                                                                                                                                                     | ApplicationContext automatically registers BeanFactoryPostProcessor and BeanPostProcessor at startup.                                                                                                                              |
+    | BeanFactory does not provide integrated lifecycle management                                                                                                                                                                                             | ApplicationContext provides integrated lifecycle management                                                                                                                                                                        |
+    | BeanFactory does not provide support for internalization.                                                                                                                                                                                                | ApplicationContext provides support for internalization.                                                                                                                                                                           |
+    | It does not have any built-in ApplicationEvent publication mechanism.                                                                                                                                                                                    | It has a built-in ApplicationEvent publication mechanism.                                                                                                                                                                          |
+    | Annotation based dependency injection is not supported by BeanFactory.                                                                                                                                                                                   | Annotation based dependency injection is supported by ApplicationContext such as @Autowired, @PreDestroy.                                                                                                                          |
+
+  <div align="right">
+    <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+## Spring Core
+
+31. ### What is Bean scope?
+
+   <div align="right">
+       <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+   </div>
