@@ -1323,24 +1323,55 @@
 
       The `id` attribute is a string which can be used to identify the individual bean definition. The `class` attribute defines the type of the bean and uses the fully qualified classname. Like `id` & `class`, there are more attributes of `<bean>` which will be discussed later. See example [here](examples/core/01-hello-world_xml).
 
-    - **Annotation-based configuration:** Spring 2.5 introduced support for annotation-based configuration metadata. This is the another way of defining beans. In Spring 2.0 and later, the `@Repository` annotation is a marker for any class that fulfills the role(stereotype) of a repository (also known as Data Access Object or DAO). Spring 2.5 introduces further stereotype annotations: `@Component`, `@Service`, and `@Controller`. `@Component` is a generic stereotype for any Spring-managed component. See example [here](examples/core/01-hello-world_annotation).
-    - **Java-based configuration:** Java-based configuration option enables us to write most of our Spring configuration without XML but with the help of few Java-based annotations. In this configuration we generally make a class annotated with `@Configuration` annotation and make a method annotated with `@Bean` annotation. Annotating a class with the `@Configuration` indicates that the class can be used by the Spring IoC container as a source of bean definitions. The `@Bean` annotation tells Spring that a method annotated with `@Bean` will return an object that should be registered as a bean in the Spring IoC container. The simplest possible `@Configuration` class would be as follows:
+    - **Annotation-based configuration:** Spring 2.5 introduced support for annotation-based configuration metadata. This is the another way of defining beans. In Spring 2.0 and later, the `@Repository` annotation is a marker for any class that fulfills the role(stereotype) of a repository (also known as Data Access Object or DAO). Spring 2.5 introduces further stereotype annotations: `@Component`, `@Service`, and `@Controller`. `@Component` is a generic stereotype for any Spring-managed component.
+
+      ```java
+      package com.altafjava.bean;
+      @Component
+      public class MyBean {
+        public MyBean() {
+          System.out.println("Constructor will execute");
+        }
+      }
+      ```
+
+      So, annotating a class with any of the stereotype annotation we are telling Spring to create the object and keep these into its container but the question is how Spring will know in which packages these annotated classes are present. That's why we use an annotation called `@ComponentScan` in the main class which generally presents in the root package. By default(without argument) `@ComponentScan` scans the current package and all of its sub-packages. We can tell Spring to scan only particular packages by providing arguments like this `@ComponentScan(basePackages = { "com.altafjava.dao", "com.altafjava.service" })`.
+
+      ```java
+      package com.altafjava;
+      @ComponentScan
+      public class App {
+        public static void main(String[] args) {
+          ApplicationContext applicationContext = new AnnotationConfigApplicationContext(App.class);
+          GreetingManager greetingManager = applicationContext.getBean(GreetingManager.class);
+          greetingManager.sayGreet();
+        }
+      }
+      ```
+
+      **Note:-** Spring stereotype annotation works the same as Java naming convention variables. Here the bean class name is MyBean. So as per the naming convention bean name will be `myBean`.
+
+      See example [here](examples/core/01-hello-world_annotation).
+
+    - **Java-based configuration:** The Java-based configuration option enables us to write most of our Spring configuration without XML but with the help of a few Java-based annotations. In this configuration we generally make a class annotated with `@Configuration` annotation and make a method annotated with `@Bean` annotation. Annotating a class with the `@Configuration` indicates that the class can be used by the Spring IoC container as a source of bean definitions. The `@Bean` annotation tells Spring that a method annotated with `@Bean` will return an object that should be registered as a bean in the Spring IoC container. The simplest possible `@Configuration` class would be as follows:
 
       ```java
       @Configuration
       public class AppConfig {
           @Bean
-          public TransferService transferService() {
+          public TransferService transferServiceBean() {
               return new TransferServiceImpl();
           }
       }
       ```
 
-      The above code is exactly equivalent to the following XML configuration.
+      **Note:-** @Bean doesn't follow the Java naming convention. According to the Java naming convention the name should be `transferService` but this is not the bean name. Here the bean name is `transferServiceBean`. Means whatever the method name we keep, with the same name bean will be created. Here the method name is `transferServiceBean()`. Hence the bean name will be `transferServiceBean`. Means we can get the bean by using `applicationContext.getBean("transferServiceBean")`. If we try to get the bean object with some other name then we shall get an exception by saying `Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'transferService' available`.
+
+      We can provide bean name in the annotation itself like `@Bean("transferService")` or `@Bean(name = "transferService")`. The above code is exactly equivalent to the following XML configuration.
 
       ```xml
       <beans>
-        <bean name="transferService" class="com.altafjava.TransferServiceImpl"/>
+        <bean name="transferServiceBean" class="com.altafjava.TransferServiceImpl"/>
       </beans>
       ```
 
@@ -1410,15 +1441,15 @@
   </div>
 
 31. ### BeanFactory vs ApplicationContext?
-    | BeanFactory                                                                                                                                                                                                                                              | ApplicationContext                                                                                                                                                                                                                 |
-    | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | Beans are instantiated when they get requested for the first time, not when the object of BeanFactory itself gets created. When we call `beanFactory.getBean(Manager.class)` then the Manager bean will be created. This is known as lazy-instantiation. | Singleton beans do not get created lazily. By default ApplicationContext immediately instantiates the singleton beans and wire/set its properties just after creation of ApplicationContext. This is known as eager-instantiation. |
-    | BeanFactory only supports two scopes(Singleton & Prototype).                                                                                                                                                                                             | ApplicationContext supports almost all types of bean scopes.                                                                                                                                                                       |
-    | BeanFactory does not register BeanFactoryPostProcessor & BeanPostProcessor automatically at startup.                                                                                                                                                     | ApplicationContext automatically registers BeanFactoryPostProcessor and BeanPostProcessor at startup.                                                                                                                              |
-    | BeanFactory does not provide integrated lifecycle management                                                                                                                                                                                             | ApplicationContext provides integrated lifecycle management                                                                                                                                                                        |
-    | BeanFactory does not provide support for internalization.                                                                                                                                                                                                | ApplicationContext provides support for internalization.                                                                                                                                                                           |
-    | It does not have any built-in ApplicationEvent publication mechanism.                                                                                                                                                                                    | It has a built-in ApplicationEvent publication mechanism.                                                                                                                                                                          |
-    | Annotation based dependency injection is not supported by BeanFactory.                                                                                                                                                                                   | Annotation based dependency injection is supported by ApplicationContext such as @Autowired, @PreDestroy.                                                                                                                          |
+    | BeanFactory                                                                                                                                                                                                                                              | ApplicationContext                                                                                                                                                                                                                   |
+    | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | Beans are instantiated when they get requested for the first time, not when the object of BeanFactory itself gets created. When we call `beanFactory.getBean(Manager.class)` then the Manager bean will be created. This is known as lazy-instantiation. | `Singleton` beans do not get created lazily. By default ApplicationContext immediately instantiates the singleton beans and wire/set its properties just after creation of ApplicationContext. This is known as eager-instantiation. |
+    | BeanFactory only supports two scopes(`Singleton` & `Prototype`).                                                                                                                                                                                         | ApplicationContext supports almost all types of bean scopes.                                                                                                                                                                         |
+    | BeanFactory does not register BeanFactoryPostProcessor & BeanPostProcessor automatically at startup.                                                                                                                                                     | ApplicationContext automatically registers BeanFactoryPostProcessor and BeanPostProcessor at startup.                                                                                                                                |
+    | BeanFactory does not provide integrated lifecycle management                                                                                                                                                                                             | ApplicationContext provides integrated lifecycle management                                                                                                                                                                          |
+    | BeanFactory does not provide support for internalization.                                                                                                                                                                                                | ApplicationContext provides support for internalization.                                                                                                                                                                             |
+    | It does not have any built-in ApplicationEvent publication mechanism.                                                                                                                                                                                    | It has a built-in ApplicationEvent publication mechanism.                                                                                                                                                                            |
+    | Annotation based dependency injection is not supported by BeanFactory.                                                                                                                                                                                   | Annotation based dependency injection is supported by ApplicationContext such as @Autowired, @PreDestroy.                                                                                                                            |
 
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
@@ -1427,6 +1458,32 @@
 ## Spring Core
 
 31. ### What is Bean scope?
+
+    Bean scope is used to decide which type of bean instance should be returned from Spring container back to the caller. Sometimes the same instance of a class can be used in multiple classes but in some other cases we might want it to be created separate instances for each class. The Spring Framework supports six scopes, four of which are available only if we use a web-aware `ApplicationContext`.
+
+    1.  Singleton:- If a bean is associated with the Singleton bean scope then only a single object instance will be created for each IoC container. When we call the `applicationContext.getBean()` method, on each call we shall get the same object instance. This is the default bean scope. Generally, we use singleton when a class does not have any state(attributes).
+
+        See examples here:
+
+        - [bean-scope-singleton_xml](examples/core/02_bean-scope-singleton_xml)
+        - [bean-scope-singleton_annotation](examples/core/02_bean-scope-singleton_annotation)
+        - [bean-scope-singleton_javaconfig](examples/core/02_bean-scope-singleton_javaconfig)
+
+    2.  Prototype:- A new instance will be created every time when the bean is requested from the container. When we call the `applicationContext.getBean()` method, on each call we shall get a different object instance. Prototype scope is used for all the beans that are stateful(contains some attributes).
+
+        See examples here:
+
+        - [bean-scope-prototype_xml](examples/core/02_bean-scope-prototype_xml)
+        - [bean-scope-prototype_annotation](examples/core/02_bean-scope-prototype_annotation)
+        - [bean-scope-prototype_javaconfig](examples/core/02_bean-scope-prototype_javaconfig)
+
+    3.  Request:- This is the same as the prototype scope, however it is meant to be used for web applications. A new instance of the bean will be created for each HTTP request.
+
+    4.  Session:- A new instance will be created for each HTTP session by the container. This can be used only in a web application environment.
+
+    5.  Application:- A new instance will be created for each `ServletContext`. This can be used only in a web application environment.
+
+    6.  Websocket:- A new instance will be created for each `WebSocket`. This can be used only in a web application environment.
 
    <div align="right">
        <b><a href="#table-of-contents">⬆ Back to Top</a></b>

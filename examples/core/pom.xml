@@ -17,6 +17,12 @@
 		<module>01-hello-world_xml</module>
 		<module>01-hello-world_javaconfig</module>
 		<module>01-hello-world_annotation</module>
+		<module>02_bean-scope-singleton_xml</module>
+		<module>02_bean-scope-singleton_annotation</module>
+		<module>02_bean-scope-singleton_javaconfig</module>
+		<module>02_bean-scope-prototype_xml</module>
+		<module>02_bean-scope-prototype_annotation</module>
+		<module>02_bean-scope-prototype_javaconfig</module>
 	</modules>
 
 	<properties>
