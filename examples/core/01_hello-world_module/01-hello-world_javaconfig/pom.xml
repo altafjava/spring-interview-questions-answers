@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.altafjava</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>01_hello-world_module</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.altafjava</groupId>
-  <artifactId>02_bean-scope-prototype_xml</artifactId>
+  <artifactId>01-hello-world_javaconfig</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>02_bean-scope-prototype_xml</name>
+  <name>01-hello-world_javaconfig</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

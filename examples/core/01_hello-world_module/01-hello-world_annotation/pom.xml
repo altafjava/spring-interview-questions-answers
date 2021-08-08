@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.altafjava</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>01_hello-world_module</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.altafjava</groupId>

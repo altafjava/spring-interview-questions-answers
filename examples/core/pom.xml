@@ -14,15 +14,9 @@
 	</parent>
 
 	<modules>
-		<module>01-hello-world_xml</module>
-		<module>01-hello-world_javaconfig</module>
-		<module>01-hello-world_annotation</module>
-		<module>02_bean-scope-singleton_xml</module>
-		<module>02_bean-scope-singleton_annotation</module>
-		<module>02_bean-scope-singleton_javaconfig</module>
-		<module>02_bean-scope-prototype_xml</module>
-		<module>02_bean-scope-prototype_annotation</module>
-		<module>02_bean-scope-prototype_javaconfig</module>
+		<module>01_hello-world_module</module>
+		<module>02_bean-scope_module</module>
+		<module>03_dependency-injection_module</module>
 	</modules>
 
 	<properties>

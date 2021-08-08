@@ -1321,7 +1321,7 @@
       </beans>
       ```
 
-      The `id` attribute is a string which can be used to identify the individual bean definition. The `class` attribute defines the type of the bean and uses the fully qualified classname. Like `id` & `class`, there are more attributes of `<bean>` which will be discussed later. See example [here](examples/core/01-hello-world_xml).
+      The `id` attribute is a string which can be used to identify the individual bean definition. The `class` attribute defines the type of the bean and uses the fully qualified classname. Like `id` & `class`, there are more attributes of `<bean>` which will be discussed later. See example [here](examples/core/01_hello-world_module/01-hello-world_xml).
 
     - **Annotation-based configuration:** Spring 2.5 introduced support for annotation-based configuration metadata. This is the another way of defining beans. In Spring 2.0 and later, the `@Repository` annotation is a marker for any class that fulfills the role(stereotype) of a repository (also known as Data Access Object or DAO). Spring 2.5 introduces further stereotype annotations: `@Component`, `@Service`, and `@Controller`. `@Component` is a generic stereotype for any Spring-managed component.
 
@@ -1351,7 +1351,7 @@
 
       **Note:-** Spring stereotype annotation works the same as Java naming convention variables. Here the bean class name is MyBean. So as per the naming convention bean name will be `myBean`.
 
-      See example [here](examples/core/01-hello-world_annotation).
+      See example [here](examples/core/01_hello-world_module/01-hello-world_annotation).
 
     - **Java-based configuration:** The Java-based configuration option enables us to write most of our Spring configuration without XML but with the help of a few Java-based annotations. In this configuration we generally make a class annotated with `@Configuration` annotation and make a method annotated with `@Bean` annotation. Annotating a class with the `@Configuration` indicates that the class can be used by the Spring IoC container as a source of bean definitions. The `@Bean` annotation tells Spring that a method annotated with `@Bean` will return an object that should be registered as a bean in the Spring IoC container. The simplest possible `@Configuration` class would be as follows:
 
@@ -1375,7 +1375,7 @@
       </beans>
       ```
 
-      See example [here](examples/core/01-hello-world_javaconfig).
+      See example [here](examples/core/01_hello-world_module/01-hello-world_javaconfig).
 
   <div align="right">
     <b><a href="#table-of-contents">⬆ Back to Top</a></b>
@@ -1465,17 +1465,17 @@
 
         See examples here:
 
-        - [bean-scope-singleton_xml](examples/core/02_bean-scope-singleton_xml)
-        - [bean-scope-singleton_annotation](examples/core/02_bean-scope-singleton_annotation)
-        - [bean-scope-singleton_javaconfig](examples/core/02_bean-scope-singleton_javaconfig)
+        - [bean-scope-singleton_xml](examples/core/02_bean-scope_module/02_bean-scope-singleton_xml)
+        - [bean-scope-singleton_annotation](examples/core/02_bean-scope_module/02_bean-scope-singleton_annotation)
+        - [bean-scope-singleton_javaconfig](examples/core/02_bean-scope_module/02_bean-scope-singleton_javaconfig)
 
     2.  Prototype:- A new instance will be created every time when the bean is requested from the container. When we call the `applicationContext.getBean()` method, on each call we shall get a different object instance. Prototype scope is used for all the beans that are stateful(contains some attributes).
 
         See examples here:
 
-        - [bean-scope-prototype_xml](examples/core/02_bean-scope-prototype_xml)
-        - [bean-scope-prototype_annotation](examples/core/02_bean-scope-prototype_annotation)
-        - [bean-scope-prototype_javaconfig](examples/core/02_bean-scope-prototype_javaconfig)
+        - [bean-scope-prototype_xml](examples/core/02_bean-scope_module/02_bean-scope-prototype_xml)
+        - [bean-scope-prototype_annotation](examples/core/02_bean-scope_module/02_bean-scope-prototype_annotation)
+        - [bean-scope-prototype_javaconfig](examples/core/02_bean-scope_module/02_bean-scope-prototype_javaconfig)
 
     3.  Request:- This is the same as the prototype scope, however it is meant to be used for web applications. A new instance of the bean will be created for each HTTP request.
 
