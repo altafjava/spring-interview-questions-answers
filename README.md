@@ -44,7 +44,9 @@
 | 32  | [What is Bean scope?](#What-is-Bean-scope)                                                                                                                               |
 | 33  | [Difference between constructor and setter injection.](#Difference-between-constructor-and-setter-injection)                                                             |
 | 34  | [Which one is the best dependency injection? Setter, Constructor or Field injection?](#Which-one-is-the-best-dependency-injection-Setter-Constructor-or-Field-injection) |
-| 35  | [More question will be added soon...](#More)                                                                                                                             |
+| 35  | [What is the type ambiguity in constructor injection?](#What-is-the-type-ambiguity-in-constructor-injection)                                                             |
+| 36  | [How can we resolve type ambiguity in constructor injection?](#How-can-we-resolve-type-ambiguity-in-constructor-injection)                                               |
+| 37  | [More question will be added soon...](#More)                                                                                                                             |
 
 ## Introduction
 
@@ -1681,6 +1683,125 @@
            */
       }
       ```
+
+  <div align="right">
+      <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+35. ### What is the type ambiguity in constructor injection?
+
+    In case of constructor injection if our class contains multiple constructors with different types and same number of parameters then spring framework causes the type ambiguities issue. Let's say we have a bean class "Customer" having two constructors with the same number of parameters with different data types. The 1st constructor has (String name, String address) parameters and 2nd constructor has (String name, int age) parameters.
+
+    ```java
+    public class Customer {
+      private String name;
+      private String address;
+      private int age;
+
+      public Customer(String name, String address) {
+        this.name = name;
+        this.address = address;
+      }
+      public Customer(String name, int age) {
+        this.name = name;
+        this.age = age;
+      }
+      @Override
+      public String toString() {
+        return "Customer [name=" + name + ", address=" + address + ", age=" + age + "]";
+      }
+    }
+    ```
+
+    In the spring bean configuration file if we pass the parameters "Ghani" & "35". It should call the 2nd constructor but unfortunately it will call the 1st constructor and the result is not as expected.
+
+    ```xml
+    <bean id="customer" class="com.altafjava.bean.Customer">
+    	<constructor-arg value="Ghani" />
+    	<constructor-arg value="35" />
+    </bean>
+    ```
+
+    Original Output: `Customer [name=Ghani, address=35, age=0]`
+
+    Expected Output: `Customer [name=Ghani, address=null, age=35]`
+
+    This is happening because by default any value we configure in the spring bean configuration file is treated as String and Spring gives more priority to the `String argument constructors`. So even if we pass `35` which is an Integer value, Spring will treat this as String. At the time of creating bean Spring will check if there are any constructor of (String, String) parameters. If yes then it will call that constructor else it will call the other constructor of (String, int) parameters.
+
+    <div align="right">
+        <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+    </div>
+
+36. ### How can we resolve type ambiguity in constructor injection?
+
+    We can resolve the type ambiguity in 3 ways.
+
+    1.  **Using type attribute:-** We can pass the `type` attribute in `<constructor-arg>` tag. This tells the Spring to convert this into its required data type. Allowed values are any primitive type that can be converted from a String such as byte, short, int, long, float, double, char, boolean according to its range.
+
+        ```xml
+        <bean id="customer" class="com.altafjava.bean.Customer">
+          <constructor-arg value="Ghani" />
+          <constructor-arg value="35" type="int"/>
+        </bean>
+        ```
+
+        Example:- [type-ambiguity-solution-type](examples/core/03_dependency-injection_module/03_constructor-injection_module/03_ci-type-ambiguity-solution-type)
+
+    2.  **Using index attribute:-** Let's consider this example
+
+        ```java
+        public class Customer {
+          private String name;
+          private int age;
+
+          public Customer(String name, int age) {
+            this.name = name;
+            this.age = age;
+          }
+          @Override
+          public String toString() {
+            return "Customer [name=" + name + ", age=" + age + "]";
+          }
+        }
+        ```
+
+        If we configure the spring bean configuration file then we need to configure the values in the same order of the constructor parameters. Here the 1st parameter is `name` and 2nd parameter is `age`. Hence we need to create the bean as follows:
+
+        ```xml
+        <bean id="customer" class="com.altafjava.bean.Customer">
+          <constructor-arg value="Ghani" />
+          <constructor-arg value="35"/>
+        </bean>
+        ```
+
+        Now what happens if we just change the order.
+
+        ```xml
+        <constructor-arg value="35"/>
+        <constructor-arg value="Ghani" />
+        ```
+
+        Here we will get an exception `UnsatisfiedDependencyException: Could not convert argument value of type [java.lang.String] to required type [int]`. If we still don't want to care about the order of the `<constructor-arg>` then we should use the `index` attribute. If there are `n` parameters in the constructor then we need to specify the `index` attribute either for `n` or `n-1` parameters.
+
+        ```xml
+        <constructor-arg value="35" index="1" />
+        <constructor-arg value="Ghani" />
+        ```
+
+        Example:- [type-ambiguity-solution-index](examples/core/03_dependency-injection_module/03_constructor-injection_module/03_ci-type-ambiguity-solution-index)
+
+    3.  **Using name attribute:-** We can solve the above problem `name` attribute as well.
+
+        ```xml
+        <bean id="customer" class="com.altafjava.bean.Customer">
+          <constructor-arg value="35" name="age" />
+          <constructor-arg value="Ghani" />
+        </bean>
+        ```
+
+        If there are `n` parameters in the constructor then we need to specify the `name` attribute either for `n` or `n-1` parameters. If we opt for `n-1` then we can skip the `name` attribute only for the string parameter.
+
+        Example:- [type-ambiguity-solution-name](examples/core/03_dependency-injection_module/03_constructor-injection_module/03_ci-type-ambiguity-solution-name)
 
   <div align="right">
       <b><a href="#table-of-contents">⬆ Back to Top</a></b>
