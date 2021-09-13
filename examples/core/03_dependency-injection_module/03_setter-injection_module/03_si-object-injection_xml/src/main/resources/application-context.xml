@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id='engine' class="com.altafjava.bean.Engine">
+		<property name="engineId" value="111" />
+		<property name="engineName" value="Ford"></property>
+	</bean>
+	<bean class="com.altafjava.bean.Car">
+		<property name="brand" value="Maruti Suzuki" />
+		<property name="model" value="Swift"></property>
+		<property name="engine" ref="engine"></property>
+	</bean>
+</beans>

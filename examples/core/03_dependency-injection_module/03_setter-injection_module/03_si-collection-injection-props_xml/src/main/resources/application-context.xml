@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="com.altafjava.bean.Continent">
+		<property name="continents">
+			<props>
+				<prop key="antarctica">Antarctica</prop>
+				<prop key="africa">Africa</prop>
+				<prop key="asia">Asia</prop>
+				<prop key="australia">Australia</prop>
+				<prop key="europe">Europe</prop>
+				<prop key="northAmerica">North America</prop>
+				<prop key="southAmerica">South America</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

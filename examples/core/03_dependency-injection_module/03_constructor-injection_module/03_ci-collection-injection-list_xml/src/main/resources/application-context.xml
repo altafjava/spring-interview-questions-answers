@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="team" class="com.altafjava.bean.Team">
+		<constructor-arg value="Avengers"></constructor-arg>
+		<constructor-arg>
+			<list>
+				<value>Iron Mans</value>
+				<value>Captain America</value>
+				<value>Thor</value>
+				<value>Hulk</value>
+				<value>Black Widow</value>
+				<value>Hawkeye</value>
+			</list>
+		</constructor-arg>
+	</bean>
+</beans>

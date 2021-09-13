@@ -15,8 +15,10 @@ public class AppConfig {
 	}
 
 	@Bean
-	public GreetingManager buildGreetingManagerBean() {
-		return new GreetingManager();
+	public GreetingManager buildGreetingManagerBean(GreetingService greetingService) {
+		GreetingManager greetingManager = new GreetingManager();
+		greetingManager.setGreetingService(greetingService);
+		return greetingManager;
 	}
 
 }

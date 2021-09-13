@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="country" class="com.altafjava.bean.Country">
+		<property name="name" value="India" />
+		<property name="cityWithZip">
+			<map>
+				<entry key="Delhi" value="110001" />
+				<entry key="Mumbai" value="400004" />
+				<entry key="Chennai" value="600001" />
+				<entry key="Kolkata" value="700007" />
+			</map>
+		</property>
+	</bean>
+</beans>

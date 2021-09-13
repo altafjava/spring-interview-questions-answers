@@ -6,42 +6,45 @@
 
 ## Table of Contents
 
-| No. | Questions                                                                                                                                                             |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     | **Introduction**                                                                                                                                                      |
-| 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                                                                                                |
-| 2   | [What is open source?](#What-is-open-source)                                                                                                                          |
-| 3   | [What is an application framework?](#What-is-an-application-framework)                                                                                                |
-| 4   | [How is Spring lightweight?](#How-is-Spring-lightweight)                                                                                                              |
-| 5   | [What is Inversion of Control (IoC)?](#What-is-Inversion-of-Control-IoC)                                                                                              |
-| 6   | [What is an aspect-oriented container framework?](#What-is-an-aspect-oriented-container-framework)                                                                    |
-| 7   | [What are the features of Spring Framework?](#What-are-the-features-of-Spring-Framework)                                                                              |
-| 8   | [What are the differences between Spring & Struts?](#What-are-the-differences-between-Spring--Struts)                                                                 |
-| 9   | [What is Java EE?](#What-is-Java-EE)                                                                                                                                  |
-| 10  | [What are the limitations of Java EE (API)?](#What-are-the-limitations-of-Java-EE-API)                                                                                |
-| 11  | [What is Boilerplate code? What are the problems if we write the boilerplate code?](#What-is-Boilerplate-code-What-are-the-problems-if-we-write-the-boilerplate-code) |
-| 12  | [Can we say Spring is the replacement of Java EE?](#Can-we-say-Spring-is-the-replacement-of-Java-EE)                                                                  |
-| 13  | [What are the different modules available in Spring?](#What-are-the-different-modules-available-in-Spring)                                                            |
-| 14  | [What is POJO?](#What-is-POJO)                                                                                                                                        |
-| 15  | [What is a Java Bean?](#What-is-a-Java-Bean)                                                                                                                          |
-| 16  | [Similarities and Differences between POJO & Java Bean?](#Similarities-and-Differences-between-POJO--Java-Bean)                                                       |
-| 17  | [What is a Spring Bean?](#What-is-a-Spring-Bean)                                                                                                                      |
-| 18  | [Java Bean vs Spring Bean?](#Java-Bean-vs-Spring-Bean)                                                                                                                |
-| 19  | [What are the ways of collaborating objects?](#What-are-the-ways-of-collaborating-objects)                                                                            |
-| 20  | [Differences Between Inheritance Vs Composition?](#Differences-Between-Inheritance-Vs-Composition)                                                                    |
-| 21  | [When to use Inheritance?](#When-to-use-Inheritance)                                                                                                                  |
-| 22  | [When to use Composition?](#When-to-use-Composition)                                                                                                                  |
-| 23  | [Difference between Tight coupling & Loose coupling?](#Difference-between-Tight-coupling--Loose-coupling)                                                             |
-| 24  | [Describe "_Favour composition over inheritance_".](#Describe-Favour-composition-over-inheritance)                                                                    |
-| 25  | [Describe "_Program to an interface, not an implementation_".](#Describe-Program-to-an-interface-not-an-implementation)                                               |
-| 26  | [What is the Open-Closed principle?](#What-is-the-Open-Closed-principle)                                                                                              |
-| 27  | [What is a Design Pattern?](#What-is-a-Design-Pattern)                                                                                                                |
-| 28  | [What is IoC Container?](#What-is-IoC-Container)                                                                                                                      |
-| 29  | [What is Configuration Metadata?](#What-is-Configuration-Metadata)                                                                                                    |
-| 30  | [How many types of IoC container/how to create IoC container?](#How-many-types-of-IoC-containerhow-to-create-IoC-container)                                           |
-| 31  | [BeanFactory vs ApplicationContext?](#BeanFactory-vs-ApplicationContext)                                                                                              |
-|     | **Spring Core**                                                                                                                                                       |
-| 32  | [What is Bean scope?](#What-is-Bean-scope)                                                                                                                            |
+| No. | Questions                                                                                                                                                                |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|     | **Introduction**                                                                                                                                                         |
+| 1   | [What is Spring Framework?](#What-is-Spring-Framework)                                                                                                                   |
+| 2   | [What is open source?](#What-is-open-source)                                                                                                                             |
+| 3   | [What is an application framework?](#What-is-an-application-framework)                                                                                                   |
+| 4   | [How is Spring lightweight?](#How-is-Spring-lightweight)                                                                                                                 |
+| 5   | [What is Inversion of Control (IoC)?](#What-is-Inversion-of-Control-IoC)                                                                                                 |
+| 6   | [What is an aspect-oriented container framework?](#What-is-an-aspect-oriented-container-framework)                                                                       |
+| 7   | [What are the features of Spring Framework?](#What-are-the-features-of-Spring-Framework)                                                                                 |
+| 8   | [What are the differences between Spring & Struts?](#What-are-the-differences-between-Spring--Struts)                                                                    |
+| 9   | [What is Java EE?](#What-is-Java-EE)                                                                                                                                     |
+| 10  | [What are the limitations of Java EE (API)?](#What-are-the-limitations-of-Java-EE-API)                                                                                   |
+| 11  | [What is Boilerplate code? What are the problems if we write the boilerplate code?](#What-is-Boilerplate-code-What-are-the-problems-if-we-write-the-boilerplate-code)    |
+| 12  | [Can we say Spring is the replacement of Java EE?](#Can-we-say-Spring-is-the-replacement-of-Java-EE)                                                                     |
+| 13  | [What are the different modules available in Spring?](#What-are-the-different-modules-available-in-Spring)                                                               |
+| 14  | [What is POJO?](#What-is-POJO)                                                                                                                                           |
+| 15  | [What is a Java Bean?](#What-is-a-Java-Bean)                                                                                                                             |
+| 16  | [Similarities and Differences between POJO & Java Bean?](#Similarities-and-Differences-between-POJO--Java-Bean)                                                          |
+| 17  | [What is a Spring Bean?](#What-is-a-Spring-Bean)                                                                                                                         |
+| 18  | [Java Bean vs Spring Bean?](#Java-Bean-vs-Spring-Bean)                                                                                                                   |
+| 19  | [What are the ways of collaborating objects?](#What-are-the-ways-of-collaborating-objects)                                                                               |
+| 20  | [Differences Between Inheritance Vs Composition?](#Differences-Between-Inheritance-Vs-Composition)                                                                       |
+| 21  | [When to use Inheritance?](#When-to-use-Inheritance)                                                                                                                     |
+| 22  | [When to use Composition?](#When-to-use-Composition)                                                                                                                     |
+| 23  | [Difference between Tight coupling & Loose coupling?](#Difference-between-Tight-coupling--Loose-coupling)                                                                |
+| 24  | [Describe "_Favour composition over inheritance_".](#Describe-Favour-composition-over-inheritance)                                                                       |
+| 25  | [Describe "_Program to an interface, not an implementation_".](#Describe-Program-to-an-interface-not-an-implementation)                                                  |
+| 26  | [What is the Open-Closed principle?](#What-is-the-Open-Closed-principle)                                                                                                 |
+| 27  | [What is a Design Pattern?](#What-is-a-Design-Pattern)                                                                                                                   |
+| 28  | [What is IoC Container?](#What-is-IoC-Container)                                                                                                                         |
+| 29  | [What is Configuration Metadata?](#What-is-Configuration-Metadata)                                                                                                       |
+| 30  | [How many types of IoC container/how to create IoC container?](#How-many-types-of-IoC-containerhow-to-create-IoC-container)                                              |
+| 31  | [BeanFactory vs ApplicationContext?](#BeanFactory-vs-ApplicationContext)                                                                                                 |
+|     | **Spring Core**                                                                                                                                                          |
+| 32  | [What is Bean scope?](#What-is-Bean-scope)                                                                                                                               |
+| 33  | [Difference between constructor and setter injection.](#Difference-between-constructor-and-setter-injection)                                                             |
+| 34  | [Which one is the best dependency injection? Setter, Constructor or Field injection?](#Which-one-is-the-best-dependency-injection-Setter-Constructor-or-Field-injection) |
+| 35  | [More question will be added soon...](#More)                                                                                                                             |
 
 ## Introduction
 
@@ -139,7 +142,7 @@
 
    - **Lightweight:** Actually Spring is a vast framework but Spring people divided the whole framework into different modules. They are designed in such a way that no module is dependent on other modules except the Spring Core module. Hence according to our requirement we can learn/use a particular module. We don't need to learn the whole framework to use the part of it. Example: We can use Spring ORM module without Spring Web module.
 
-   - **Dependency Injection:** The process of injecting the dependent object into the target object is nothing but dependency injection. Let's take an example: There is an Employee class. It requires an Address object. Means Employee class is a target object & the Address is class dependent.
+   - **Dependency Injection:** The process of injecting the target object into the dependent object is nothing but dependency injection. Let's take an example: There is an `Employee` class. It requires an `Address` object. Means `Employee` class is dependent on `Address` class. Hence `Employee` class becomes the dependent object and the `Address` class becomes the target object.
 
      ```java
      @Component
@@ -175,6 +178,7 @@
 
      - Constructor Injection: Dependencies are provided as constructor parameters. Ex: Spring, Pico container etc
      - Setter Injection: Dependencies are assigned through setter methods. Ex: Spring
+     - Field Injection: Dependencies are assigned directly through the variables. Ex: Spring
      - Interface Injection: Injection is done through an interface. Ex: Avalon, but Avalon has been closed now
 
      **Note:** Spring supports only Constructor and Setter Injection.
@@ -1488,3 +1492,196 @@
    <div align="right">
        <b><a href="#table-of-contents">⬆ Back to Top</a></b>
    </div>
+
+32. ### What type of dependency injection spring supports?
+
+    Spring supports three ways of dependency injection.
+
+    - Setter Injection:- Injecting the bean dependencies using the setter methods is called setter injection. The container first calls the no argument constructor and then calls the setters. It means it is mandatory to have no-arg constructor when working with Setter injection. Setter injection can be acheived by `<property>` tag.
+
+      Syntax:
+
+      ```xml
+      <bean id="" class="">
+        <property name="" value="" />
+        <property name="" ref="" />
+      </bean>
+      ```
+
+      Examples:
+
+      [setter-injection_module](examples/core/03_dependency-injection_module/03_setter-injection_module)
+
+    - Constructor injection:- Injecting the bean dependencies using the constructor is called constructor injection. Setter injection can be acheived by `<constructor-arg>` tag.
+
+      Syntax:
+
+      ```xml
+      <bean id="" class="">
+        <constructor-arg value="" />
+        <constructor-arg ref="" />
+      </bean>
+      ```
+
+      Examples:
+
+      [constructor-injection_module](examples/core/03_dependency-injection_module/03_constructor-injection_module)
+
+    - Field Injection:- Injecting the bean dependencies directly to the fields(variables) is called Field Injection. Spring can inject the dependencies, even if the field is private by using Java Reflections.
+
+      Example:
+
+      [field-injection](examples/core/03_dependency-injection_module/03_field-injection_module/03_fi-object-injection_annotation)
+
+  <div align="right">
+      <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+33. ### Difference between constructor and setter injection.
+
+    | Setter Injection                                                                                                                     | Constructor Injection                                                                                                     |
+    | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+    | It uses setters to inject the dependencies.                                                                                          | It uses constructors to inject the dependencies.                                                                          |
+    | Dependency is injected after creating the dependent object.                                                                          | Dependency is injected after at the time of creating the dependent object.                                                |
+    | `<property>` tag is used for setter injection.                                                                                       | `<constructor-arg>` is used for constructor injection.                                                                    |
+    | &lt;property&gt; tag is optional. This means we can either write or leave the &lt;property&gt; tag but still object will be created. | &lt;constructor-arg&gt; is mandatory. We must have to write &lt;constructor-arg&gt; tag otherwise we shall get exception. |
+    | &lt;property&gt; tag uses attribute name to inject the dependency.                                                                   | &lt;constructor-arg&gt; uses index to inject the dependency.                                                              |
+    | Partial dependency can be injected using setter injection.                                                                           | Partial Injection is not possible in constructor injection.                                                               |
+    | Setter injection overrides the constructor injection.                                                                                | Constructor injection has less priority than setter injection.                                                            |
+    | Circular dependency can be handled in setter injection.                                                                              | Circular dependency cannot be handled in constructor injection.                                                           |
+    | We can easily change the property value of a bean without creating a new object.                                                     | Changing the property value always creates a new object.                                                                  |
+
+    **Partial Dependency:-** Let's say we have 3 properties in a class, having 3 arg constructor & setters. In this case, if we want to pass information for only one property, it is possible by setter injection only.
+
+    **Note:-** If we use both constructor & setter injection, IOC container will use the setter injection. This means setter injection overrides the constructor injection.
+
+    Example:- [setter-constructor-overridng](examples/core/03_dependency-injection_module/03_setter-constructor-overriding)
+
+  <div align="right">
+      <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>
+
+34. ### Which one is the best dependency injection? Setter, Constructor or Field injection?
+
+    Each dependency injection has its own advantages & disadvantages. The good thing about Spring is that it doesn't restrict us to use any particular dependency injection. These are just guidelines and not rules. We just have to be smart enough to take a call and justify which way we want to go.
+
+    > **Readability:-** The readability is humans' judgement about how easy to understand a software program or a piece of software program is. A developer spends 30% of time writing a piece of software and 70% of time maintaining it. The readability improves software maintainability. When a developer looks at a class, he/she should quickly be able to focus on vital parts of the class without getting distracted by boilerplate code, or other framework components.
+
+    - Field Injection:- Best. Less boilerplate code. Focus is on business logic.
+    - Constructor Injection:- Better. Constructors visually stand separate from methods.
+    - Setter Injection:- Worst. Adds multiple instance methods. Takes away focus from business methods.
+
+    > **Immutability:-** In Software Programming terms, an Object is called as Immutable if, by any means, its state can not be modified after creation. Immutability is a really important principle of good Object Oriented Programming. The immutability brings thread-safety, state safety, and readability to the classes.
+
+    - Constructor Injection:- Supports immutability.
+    - Setter Injection:- No immutability.
+    - Field Injection:- No immutability.
+
+    > **State Safety:-** An object, most likely, is instantiated by the consumers or the underlying framework. The object itself should provide rules or guidelines to the instantiaters so that they will invoke the object in a correct state. If the Object doesn’t mandate such state safety, there is a possibility of the objects being instantiated to incomplete or incorrect states. If we are using Spring then no need to worry about state safety because Spring itself is resolving their dependencies and Spring will correctly initialise all the fields but some consumers may instantiate our object with a `new` keyword. We should look at state safety beyond Spring Framework.
+
+    - Constructor Injection:- State safe. The object is instantiated to a full state or is not instantiated at all.
+    - Setter Injection:- Consumers can use no-argument constructor and possibility miss calling one of the setters or call same setter twice with different value (copy-paste bugs).
+    - Field Injection:- Consumers can use no-argument constructor. There is no valid way to set the state of the object. Only option is to use Reflection to set the private fields.
+
+    > **Too Many Instance Fields:-** Let’s consider a case of an object having 6, 7 or more fields.
+
+    - Field Injection:- Still looks better, and readable. The dependency part is segregated at one place.
+
+      ```java
+      @Component
+      public class MyClass {
+          @Autowired private Service1 service1;
+          @Autowired private Service2 service2;
+          @Autowired private Service3 service3;
+          @Autowired private Service4 service4;
+          @Autowired private Service5 service5;
+          @Autowired private Service6 service6;
+          @Autowired private Service7 service7;
+          /*
+           * Business methods
+           */
+      }
+      ```
+
+    - Constructor Injection:- Ugly. The constructor injection is really looking ugly. It is also not easy to use for consumers.
+
+      ```java
+      @Component
+      public class MyClass {
+          private Service1 service1;
+          private Service2 service2;
+          private Service3 service3;
+          private Service4 service4;
+          private Service5 service5;
+          private Service6 service6;
+          private Service7 service7;
+          private Service8 service7;
+
+          @Autowired
+          public MyClass(Service1 service1, Service2 service2, Service3 service3, Service4 service4, Service5 service5, Service6 service6, Service7 service7) {
+              this.service1 = service1;
+              this.service2 = service2;
+              this.service3 = service3;
+              this.service4 = service4;
+              this.service5 = service5;
+              this.service6 = service6;
+              this.service7 = service7;
+          }
+          /*
+           * Business methods
+           */
+      }
+
+      ```
+
+    - Setter Injection:- Bad. It has added 7 extra instance methods just for setting up the dependency.
+
+      ```java
+      @Component
+      public class MyClass {
+          private Service1 service1;
+          private Service2 service2;
+          private Service3 service3;
+          private Service4 service4;
+          private Service5 service5;
+          private Service6 service6;
+          private Service7 service7;
+          private Service8 service7;
+
+          @Autowired
+          public void setService1(Service1 service1) {
+              this.service1 = service1;
+          }
+          @Autowired
+          public void setService2(Service2 service2) {
+              this.service2 = service2;
+          }
+          @Autowired
+          public void setService3(Service3 service3) {
+              this.service3 = service3;
+          }
+          @Autowired
+          public void setService4(Service4 service4) {
+              this.service4 = service4;
+          }
+          @Autowired
+          public void setService5(Service5 service5) {
+              this.service5 = service5;
+          }
+          @Autowired
+          public void setService6(Service6 service6) {
+              this.service6 = service6;
+          }
+          @Autowired
+          public void setService7(Service7 service7) {
+              this.service7 = service7;
+          }
+          /*
+           * Business methods
+           */
+      }
+      ```
+
+  <div align="right">
+      <b><a href="#table-of-contents">⬆ Back to Top</a></b>
+  </div>

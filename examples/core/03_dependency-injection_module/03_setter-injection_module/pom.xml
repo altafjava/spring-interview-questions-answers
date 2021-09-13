@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.altafjava</groupId>
+		<artifactId>03_dependency-injection_module</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>03_setter-injection_module</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>03_si-primitive-string-injection_annotation</module>
+		<module>03_si-primitive-string-injection_javaconfig</module>
+		<module>03_si-primitive-string-injection_xml</module>
+		<module>03_si-object-injection_annotation</module>
+		<module>03_si-object-injection_javaconfig</module>
+		<module>03_si-object-injection_xml</module>
+		<module>03_si-collection-injection-list_xml</module>
+		<module>03_si-collection-injection-list_javaconfig</module>
+		<module>03_si-collection-injection-set_xml</module>
+		<module>03_si-collection-injection-set_javaconfig</module>
+    <module>03_si-collection-injection-map_xml</module>
+    <module>03_si-collection-injection-map_javaconfig</module>
+    <module>03_si-collection-injection-props_xml</module>
+    <module>03_si-collection-injection-props_javaconfig</module>
+  </modules>
+</project>
