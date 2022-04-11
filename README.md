@@ -1765,7 +1765,7 @@
         }
         ```
 
-        If we configure the spring bean configuration file then we need to configure the values in the same order of the constructor parameters. Here the 1st parameter is `name` and 2nd parameter is `age`. Hence we need to create the bean as follows:
+        Here we need to configure the values(name & age) in the same order of the constructor parameters. 1st parameter is `name` & 2nd parameter is `age`. So we need to create the bean as follows:
 
         ```xml
         <bean id="customer" class="com.altafjava.bean.Customer">
@@ -1781,7 +1781,7 @@
         <constructor-arg value="Ghani" />
         ```
 
-        Here we will get an exception `UnsatisfiedDependencyException: Could not convert argument value of type [java.lang.String] to required type [int]`. If we still don't want to care about the order of the `<constructor-arg>` then we should use the `index` attribute. If there are `n` parameters in the constructor then we need to specify the `index` attribute either for `n` or `n-1` parameters.
+        Here we will get an exception `UnsatisfiedDependencyException: Could not convert argument value of type [java.lang.String] to required type [int]`. If we don't want to care about the order of the `<constructor-arg>` then we can use the `index` attribute. If there are `n` parameters in the constructor then we need to specify the `index` attribute either for `n` or `n-1` parameters.
 
         ```xml
         <constructor-arg value="35" index="1" />
@@ -1790,7 +1790,7 @@
 
         Example:- [type-ambiguity-solution-index](examples/core/03_dependency-injection_module/03_constructor-injection_module/03_ci-type-ambiguity-solution-index)
 
-    3.  **Using name attribute:-** We can solve the above problem `name` attribute as well.
+    3.  **Using name attribute:-** We can solve the above problem using `name` attribute as well.
 
         ```xml
         <bean id="customer" class="com.altafjava.bean.Customer">
@@ -1799,7 +1799,7 @@
         </bean>
         ```
 
-        If there are `n` parameters in the constructor then we need to specify the `name` attribute either for `n` or `n-1` parameters. If we opt for `n-1` then we can skip the `name` attribute only for the string parameter.
+        If there are `n` parameters in the constructor then we need to specify the `name` attribute either for `n` or `n-1` parameters. **If we opt `n-1` then we can skip `name` attribute only for the "String" parameter**.
 
         Example:- [type-ambiguity-solution-name](examples/core/03_dependency-injection_module/03_constructor-injection_module/03_ci-type-ambiguity-solution-name)
 
