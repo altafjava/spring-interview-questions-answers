@@ -42,11 +42,12 @@
 | 31  | [BeanFactory vs ApplicationContext?](#BeanFactory-vs-ApplicationContext)                                                                                                 |
 |     | **Spring Core**                                                                                                                                                          |
 | 32  | [What is Bean scope?](#What-is-Bean-scope)                                                                                                                               |
-| 33  | [Difference between constructor and setter injection.](#Difference-between-constructor-and-setter-injection)                                                             |
-| 34  | [Which one is the best dependency injection? Setter, Constructor or Field injection?](#Which-one-is-the-best-dependency-injection-Setter-Constructor-or-Field-injection) |
-| 35  | [What is the type ambiguity in constructor injection?](#What-is-the-type-ambiguity-in-constructor-injection)                                                             |
-| 36  | [How can we resolve type ambiguity in constructor injection?](#How-can-we-resolve-type-ambiguity-in-constructor-injection)                                               |
-| 37  | [More question will be added soon...](#More)                                                                                                                             |
+| 33  | [What type of dependency injection spring supports?](#What-type-of-dependency-injection-spring-supports)                                                                 |
+| 34  | [Difference between constructor and setter injection.](#Difference-between-constructor-and-setter-injection)                                                             |
+| 35  | [Which one is the best dependency injection? Setter, Constructor or Field injection?](#Which-one-is-the-best-dependency-injection-Setter-Constructor-or-Field-injection) |
+| 36  | [What is the type ambiguity in constructor injection?](#What-is-the-type-ambiguity-in-constructor-injection)                                                             |
+| 37  | [How can we resolve type ambiguity in constructor injection?](#How-can-we-resolve-type-ambiguity-in-constructor-injection)                                               |
+| 38  | [More question will be added soon...](#More)                                                                                                                             |
 
 ## Introduction
 
@@ -1453,7 +1454,7 @@
     | BeanFactory only supports two scopes(`Singleton` & `Prototype`).                                                                                                                                                                                         | ApplicationContext supports almost all types of bean scopes.                                                                                                                                                                         |
     | BeanFactory does not register BeanFactoryPostProcessor & BeanPostProcessor automatically at startup.                                                                                                                                                     | ApplicationContext automatically registers BeanFactoryPostProcessor and BeanPostProcessor at startup.                                                                                                                                |
     | BeanFactory does not provide integrated lifecycle management                                                                                                                                                                                             | ApplicationContext provides integrated lifecycle management                                                                                                                                                                          |
-    | BeanFactory does not provide support for internalization.                                                                                                                                                                                                | ApplicationContext provides support for internalization.                                                                                                                                                                             |
+    | BeanFactory does not provide support for internationalization.                                                                                                                                                                                           | ApplicationContext provides support for internationalization.                                                                                                                                                                        |
     | It does not have any built-in ApplicationEvent publication mechanism.                                                                                                                                                                                    | It has a built-in ApplicationEvent publication mechanism.                                                                                                                                                                            |
     | Annotation based dependency injection is not supported by BeanFactory.                                                                                                                                                                                   | Annotation based dependency injection is supported by ApplicationContext such as @Autowired, @PreDestroy.                                                                                                                            |
 
@@ -1463,7 +1464,7 @@
 
 ## Spring Core
 
-31. ### What is Bean scope?
+32. ### What is Bean scope?
 
     Bean scope is used to decide which type of bean instance should be returned from Spring container back to the caller. Sometimes the same instance of a class can be used in multiple classes but in some other cases we might want it to be created separate instances for each class. The Spring Framework supports six scopes, four of which are available only if we use a web-aware `ApplicationContext`.
 
@@ -1495,7 +1496,7 @@
        <b><a href="#table-of-contents">⬆ Back to Top</a></b>
    </div>
 
-32. ### What type of dependency injection spring supports?
+33. ### What type of dependency injection spring supports?
 
     Spring supports three ways of dependency injection.
 
@@ -1539,7 +1540,7 @@
       <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
 
-33. ### Difference between constructor and setter injection.
+34. ### Difference between constructor and setter injection.
 
     | Setter Injection                                                                                                                     | Constructor Injection                                                                                                     |
     | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
@@ -1563,7 +1564,7 @@
       <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
 
-34. ### Which one is the best dependency injection? Setter, Constructor or Field injection?
+35. ### Which one is the best dependency injection? Setter, Constructor or Field injection?
 
     Each dependency injection has its own advantages & disadvantages. The good thing about Spring is that it doesn't restrict us to use any particular dependency injection. These are just guidelines and not rules. We just have to be smart enough to take a call and justify which way we want to go.
 
@@ -1688,7 +1689,7 @@
       <b><a href="#table-of-contents">⬆ Back to Top</a></b>
   </div>
 
-35. ### What is the type ambiguity in constructor injection?
+36. ### What is the type ambiguity in constructor injection?
 
     In case of constructor injection if our class contains multiple constructors with different types and same number of parameters then spring framework causes the type ambiguities issue. Let's say we have a bean class "Customer" having two constructors with the same number of parameters with different data types. The 1st constructor has (String name, String address) parameters and 2nd constructor has (String name, int age) parameters.
 
@@ -1732,7 +1733,7 @@
         <b><a href="#table-of-contents">⬆ Back to Top</a></b>
     </div>
 
-36. ### How can we resolve type ambiguity in constructor injection?
+37. ### How can we resolve type ambiguity in constructor injection?
 
     We can resolve the type ambiguity in 3 ways.
 
